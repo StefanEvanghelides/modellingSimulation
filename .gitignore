@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Colliding Galaxies extra ignore list
+TMP/
+
 # C extensions
 *.so
 
