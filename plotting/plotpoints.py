@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import numpy as np
 import time
+import sys, os
 
 def read_data(path, iters, stepsize):
 	# for every iteration, a list of stars with x,y,z
@@ -10,7 +11,7 @@ def read_data(path, iters, stepsize):
 	coords = [[[],[],[]]]
 
 	for i in range(int(iters/stepsize)):
-		filename = path + "/step_" + str(i*10) + ".dat"
+		filename = os.path.join(path, "step_"+str(i*10)+".dat")
 		## IO part, read all the coords
 		try:
 			with open(filename, 'r') as f:
@@ -32,9 +33,9 @@ def read_data(path, iters, stepsize):
 def plot_stars(coords):
 	fig = plt.figure()
 	axes = fig.add_subplot(111, projection='3d')
-	axes.set_xlim(-50, 50)
-	axes.set_ylim(-50, 50)
-	axes.set_zlim(-50, 50)
+	axes.set_xlim(-500, 500)
+	axes.set_ylim(-500, 500)
+	axes.set_zlim(-500, 500)
 
 	wframe = None
 	tstart = time.time()
@@ -52,9 +53,12 @@ def plot_stars(coords):
 
 
 def main():
-	# path = "/Users/hidde/Documents/behalf/bin/results/n_1000_t_200/step_" + str(i) + ".dat"
-	path = "/Users/hidde/Documents/behalf/results/mpi_32_10000_10000_100"
-	iters = 3570
+	# Update these
+	result = "mpi_64_1000_1000_10"
+	iters = 1000
+
+	path = os.path.join(os.path.abspath("./TMP/behalf-master/results"), result)
+
 	coords = read_data(path, iters, 10)
 	plot_stars(coords)
 
