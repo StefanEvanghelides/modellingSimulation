@@ -1,0 +1,20 @@
+# Metadata: DIR is specified in environment
+TARGET = $(DIR)\RUN
+
+# Compiler specs
+CC = g++
+CFLAGS = -Wall -Werror -std=c++2a
+PTHREADFLAGS = -pthread
+
+# Sources and headers
+# USE "dir /s /b *.cc" to show all *.cc files recursively
+SOURCES = $(DIR)\*.cpp
+IH = $(DIR)\main.ih
+HEADERS = $(DIR)\*.h
+
+# Link objects and create executable
+$(TARGET):
+	$(CC) $(SOURCES) -o $@ $(CFLAGS) $(PTHREADFLAGS)
+
+clean:
+	del $(DIR)\RUN*
