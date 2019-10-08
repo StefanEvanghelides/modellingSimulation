@@ -9,6 +9,7 @@ TMP/
 # C/C++ stuff
 *.so
 **/RUN*
+**/*vscode*
 
 # Distribution / packaging
 .Python

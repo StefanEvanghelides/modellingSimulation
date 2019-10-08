@@ -3,14 +3,12 @@ TARGET = $(DIR)\RUN
 
 # Compiler specs
 CC = g++
-CFLAGS = -Wall -Werror -std=c++2a
+CFLAGS = -Wall -std=c++2a
 PTHREADFLAGS = -pthread
 
 # Sources and headers
 # USE "dir /s /b *.cc" to show all *.cc files recursively
-SOURCES = $(DIR)\*.cpp
-IH = $(DIR)\main.ih
-HEADERS = $(DIR)\*.h
+SOURCES = $(DIR)\*.cpp $(DIR)\models\*.cpp $(DIR)\utils\*.cpp
 
 # Link objects and create executable
 $(TARGET):
