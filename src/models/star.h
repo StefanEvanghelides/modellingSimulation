@@ -24,6 +24,7 @@ public:
     void setCoord(const Coordinate& coord) {this->coord = coord;}
     void setDir(const Coordinate& dir) {this->dir = dir;}
 
+    const std::string exportString() const;
     void showStar() const;
 
 private:

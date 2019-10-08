@@ -54,13 +54,6 @@ void Simulation::run()
 
 void Simulation::update(size_t iteration)
 {
-
-    // show stars - DUMMY FUNCTION, DELETE THIS
-    for (const Star& star : this->stars)
-    {
-        star.showStar();
-    }
-
     for (Star& star : stars)
     {
         for (Star& other : stars)
@@ -105,7 +98,24 @@ void Simulation::writeToFile(const std::string& fileName)
     std::ofstream file {path};
     if (file.is_open())
     {
-        file << "testing";
+        // Write file header commentary
+        // Note: This file is expected to be run in python, so use python comment syntax
+        file << "# This file was created for the Modelling Simulation course, RUG (September-November 2019)." << std::endl
+             << "#" << std::endl
+             << "# Project: Simulate colliding galaxies, using Barnes-Hut algorithm." << std::endl
+             << "#" << std::endl
+             << "# Students:" << std::endl
+             << "#     Stefan Evanghelides (s2895323)" << std::endl
+             << "#     Hidde Folkertsma (s759799)" << std::endl
+             << "#" << std::endl
+             << "#     X         Y         Z         DX        DY        DZ" << std::endl;
+
+        // Write the stars
+        for (const Star& star : stars)
+        {
+            file << star.exportString();
+        }
+
         file.close();
     }
     else
