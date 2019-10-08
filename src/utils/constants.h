@@ -22,5 +22,9 @@ const double MASS_MAX = 10;
 const double UNI_MAX = 1000;
 const double UNI_MAX_DEV = 100;
 
+// Minimum star speed and speed deviation
+const double DIR_MIN = -0.1;
+const double DIR_MIN_DEV = 0.2;
+
 
 #endif // _CONSTANTS_H

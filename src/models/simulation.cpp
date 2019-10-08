@@ -1,6 +1,6 @@
 #include "simulation.h"
 #include "../utils/constants.h"
-
+#include <sstream>
 
 void Simulation::run()
 {
@@ -17,6 +17,47 @@ void Simulation::run()
     {
         star.showStar();
     }
+
+    for (size_t iter = 0; iter < iterations; iter++)
+    {
+        update(iter);
+    }
+}
+
+void Simulation::update(size_t iteration)
+{
+    for (Star& star : stars)
+    {
+        for (Star& other : stars)
+        {
+            if (star == other) continue; // skip the same star
+
+            // DO something here
+            // Update stars
+        }
+    }
+    exportIteration(iteration);
+}
+
+void Simulation::exportIteration(size_t iteration)
+{
+    // Generate the name of the file
+    const std::string& fileName = getFileName(iteration);
+
+    // Export to file
+}
+
+std::string Simulation::getFileName(size_t iteration)
+{
+    const size_t nrStars1 = galaxy1.getNrStars();
+    const size_t nrStars2 = galaxy2.getNrStars();
+
+    std::stringstream ss;
+    ss  << nrStars1 << "-by-" << nrStars2
+        << "_iterations=" << this->iterations
+        << "_step=" << iteration;
+
+    return ss.str();
 }
 
 // Gravitational Force formula
