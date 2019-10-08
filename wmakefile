@@ -8,7 +8,7 @@ PTHREADFLAGS = -pthread
 
 # Sources and headers
 # USE "dir /s /b *.cc" to show all *.cc files recursively
-SOURCES = $(DIR)\*.cpp $(DIR)\models\*.cpp $(DIR)\utils\*.cpp
+SOURCES = $(DIR)\*.cpp $(DIR)\models\*.cpp $(DIR)\utils\*.cpp $(DIR)\simulation\*.cpp
 
 # Link objects and create executable
 $(TARGET):

@@ -1,7 +1,7 @@
 #ifndef _SIMULATION_H
 #define _SIMULATION_H
 
-#include "galaxy.h"
+#include "../models/galaxy.h"
 
 class Simulation
 {
