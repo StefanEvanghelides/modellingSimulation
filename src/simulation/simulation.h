@@ -2,6 +2,7 @@
 #define _SIMULATION_H
 
 #include "../models/galaxy.h"
+#include <string>
 
 class Simulation
 {
@@ -16,7 +17,8 @@ public:
 private: // Private functions
     void update(size_t iteration);
     void exportIteration(size_t iteration);
-    std::string getFileName(size_t iteration);
+    const std::string getFileName(size_t iteration);
+    void writeToFile(const std::string& fileName);
 
 private: // Private members
     Galaxy galaxy1;
@@ -24,5 +26,8 @@ private: // Private members
     std::vector<Star> stars;
     size_t iterations;
 };
+
+// Forward declarations
+bool directoryExists(const char *path);
 
 #endif // _SIMULATION_H

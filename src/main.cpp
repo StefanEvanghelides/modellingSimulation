@@ -11,7 +11,7 @@ int main(int argc, char** argv)
     const size_t nrStars2 = 10;
 
     // User input - number of iterations
-    const size_t iterations = 1000;
+    const size_t iterations = 10;
 
     Galaxy galaxy1 {galaxyCenter1, nrStars1};
     Galaxy galaxy2 {galaxyCenter2, nrStars2};
