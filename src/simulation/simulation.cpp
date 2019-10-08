@@ -5,19 +5,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-/// Good option to keep in mind, might be useful later
-#include <stdio.h>  /* defines FILENAME_MAX */
-#ifdef _WIN32
-    #include <direct.h>
-    #include <process.h>
-    #include <conio.h>
-    #define GetCurrentDir _getcwd
-#else
-    #include <unistd.h>
-    #define GetCurrentDir getcwd
-#endif
-
-
 void Simulation::run()
 {
     std::cout << "Running the simulation!" << std::endl;
@@ -139,25 +126,6 @@ bool directoryExists(const char *path)
         return true;
     else
         return false;
-}
-
-std::string getBaseDirectory()
-{
-    char cCurrentPath[FILENAME_MAX];
-    std::string baseDirectory;
-
-    if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-    {
-        std::cout << "Base directory could not be determined" << std::endl;
-        return baseDirectory;
-    } 
-    else
-    {
-        cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
-        baseDirectory = cCurrentPath;
-    }
-    
-    return baseDirectory;
 }
 
 // Gravitational Force formula
