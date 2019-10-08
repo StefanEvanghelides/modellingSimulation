@@ -13,6 +13,8 @@
     #include <conio.h>
     #define GetCurrentDir _getcwd
 #else
+    #include <sys/types.h>
+    #include <sys/stat.h>
     #include <unistd.h>
     #define GetCurrentDir getcwd
 #endif
@@ -20,7 +22,7 @@
 
 void Simulation::run()
 {
-    std::cout << "Running the simulation!" <<std::endl;
+    std::cout << "Running the simulation!" << std::endl;
     
     // Combine stars from galaxies
     std::vector<Star> stars1 = galaxy1.getStars();
@@ -32,8 +34,12 @@ void Simulation::run()
     std::ofstream dataDirectory;
     if (!directoryExists(DATA_DIRECTORY))
     {
-        std::cout << "Directory doesn't exist! Attempting to create it..." <<std::endl;
-        int errorDirCreated = mkdir(DATA_DIRECTORY);
+        std::cout << "Directory doesn't exist! Attempting to create it..." << std::endl;
+        #ifdef _WIN32
+            int errorDirCreated = mkdir(DATA_DIRECTORY);
+        #else
+            int errorDirCreated = mkdir(DATA_DIRECTORY, 0777);
+        #endif
         if (errorDirCreated)
         {
             std::cout << "Directory could not be created!" << std::endl;
@@ -100,13 +106,13 @@ void Simulation::writeToFile(const std::string& fileName)
     {
         // Write file header commentary
         // Note: This file is expected to be run in python, so use python comment syntax
-        file << "# This file was created for the Modelling Simulation course, RUG (September-November 2019)." << std::endl
+        file << "# This file was created for the Modelling and Simulation course, RUG (September-November 2019)." << std::endl
              << "#" << std::endl
              << "# Project: Simulate colliding galaxies, using Barnes-Hut algorithm." << std::endl
              << "#" << std::endl
              << "# Students:" << std::endl
              << "#     Stefan Evanghelides (s2895323)" << std::endl
-             << "#     Hidde Folkertsma (s759799)" << std::endl
+             << "#     Hidde Folkertsma (s2759799)" << std::endl
              << "#" << std::endl
              << "#     X         Y         Z         DX        DY        DZ" << std::endl;
 
@@ -129,9 +135,9 @@ bool directoryExists(const char *path)
 {
     struct stat info;
 
-    if(stat( path, &info ) != 0)
+    if (stat(path, &info) != 0)
         return false;
-    else if(info.st_mode & S_IFDIR)
+    else if (info.st_mode & S_IFDIR)
         return true;
     else
         return false;
@@ -146,7 +152,8 @@ std::string getBaseDirectory()
     {
         std::cout << "Base directory could not be determined" << std::endl;
         return baseDirectory;
-    } else
+    } 
+    else
     {
         cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
         baseDirectory = cCurrentPath;
@@ -164,6 +171,6 @@ double gravitationalForce(const Star& s1, const Star& s2)
     double m1 = s1.getMass();
     double m2 = s2.getMass();
 
-    return G * m1 * m2 / pow(r,2);
+    return G * m1 * m2 / pow(r, 2);
 }
 

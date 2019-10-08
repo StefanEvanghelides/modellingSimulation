@@ -4,9 +4,9 @@
 // Distance formula
 double distance(const Coordinate& coord1, const Coordinate& coord2)
 {
-    double dist = sqrt(pow(coord1.x-coord2.x,2) +
-                       pow(coord1.y-coord2.y,2) +
-                       pow(coord1.z-coord2.z,2));
+    double dist = sqrt(pow(coord1.x - coord2.x, 2) +
+                       pow(coord1.y - coord2.y, 2) +
+                       pow(coord1.z - coord2.z, 2));
     
     return dist;
 }

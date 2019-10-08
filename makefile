@@ -1,43 +1,17 @@
-# Metadata
-DIR = .
-TARGET = $(DIR)/RUN
+# Metadata: DIR is specified in environment
+TARGET = ./run
 
 # Compiler specs
-CC = g++
-CFLAGS = -Wall -Werror -std=c++2a
-RM = rm -f
-
-# Type of project = C++
-SOURCES_EXTENSION = cc
-OBJECTS_EXTENSION = o
-HEADERS_EXTENSION = h
+CXX = g++
+CXXFLAGS = -Wall -std=c++2a -pthread
 
 # Sources and headers
-IH = main.ih
-#SOURCES := $(wildcard $(DIR)/*.$(SOURCES_EXTENSION)) 
-SOURCES := $(shell find $(DIR) -name '*.$(SOURCES_EXTENSION)')
-HEADERS := $(wildcard $(DIR)/*.$(HEADERS_EXTENSION))
-OBJECTS := $(SOURCES:.$(SOURCES_EXTENSION)=.$(OBJECTS_EXTENSION))
-
-# Command line arguments.
-# Use: make run ARGS='arg1 arg2 arg3...'
-ARGS = $(filter-out $@,$(MAKECMDGOALS))
-
-# Compile sources into objects
-%.$(OBJECTS_EXTENSION): %.$(SOURCES_EXTENSION) $(IH) $(HEADERS)
-	$(CC) -c $< -o $@ $(CFLAGS)
+# USE "dir /s /b *.cpp" to show all *.cpp files recursively
+SOURCES := $(shell find $(shell pwd) -name '*.cpp')
 
 # Link objects and create executable
-$(TARGET): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@ $(CFLAGS)
-	$(RM) $(OBJECTS)
+$(TARGET):
+	$(CXX) $(CXXFLAGS) $(SOURCES) -o $@
 
-# Run the executable (+ command line arguments)
-run: $(TARGET)
-	$(TARGET) $(ARGS)
-
-# Clean the executable and object files
-clean: $(OBJECTS)
-	$(RM) $(TARGET) $(OBJECTS)
-
-
+clean:
+	rm -rf RUN
