@@ -42,7 +42,9 @@ void Octree::insert(const Star &star)
 // check if all children are null
 bool Octree::isLeaf() const
 {
-	return std::all_of(std::begin(children), std::end(children), [](auto& x){return !x;});
+	for (auto& x : children)
+		if (x) return 0;
+	return 1;
 }
 
 
