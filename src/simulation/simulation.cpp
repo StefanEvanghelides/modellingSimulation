@@ -1,5 +1,6 @@
 #include "simulation.h"
 #include "../utils/constants.h"
+#include "../octree/octree.h"
 #include <sstream>
 #include <fstream>
 #include <sys/types.h>

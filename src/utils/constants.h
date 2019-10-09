@@ -1,5 +1,5 @@
 #ifndef _CONSTANTS_H
-#define _CONSTANTS_Hs
+#define _CONSTANTS_H
 
 /**
  * This file contains the main constants used for
