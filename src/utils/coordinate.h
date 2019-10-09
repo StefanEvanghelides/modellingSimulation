@@ -18,6 +18,9 @@ typedef struct Coordinate
     {
         std::cout << "(" << x << "," << y << "," << z << ")";
     }
+
+    // static Coordinate middleCoord(const Coordinate& coord1, const Coordinate& coord2);
+
 } Coordinate;
 
 // Forward declarations
