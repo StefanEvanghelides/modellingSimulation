@@ -18,11 +18,11 @@ int main(int argc, char** argv)
     tree.insert(initializeStar(galaxyCenter2));
     tree.print(std::cout, " ");
 
-    User input - number of stars
+    // User input - number of stars
     const size_t nrStars1 = 10;
     const size_t nrStars2 = 10;
 
-    User input - number of iterations
+    // User input - number of iterations
     const size_t iterations = 10;
 
     Galaxy galaxy1 {galaxyCenter1, nrStars1};
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     galaxy1.showGalaxy();
     galaxy2.showGalaxy();
 
-    Run the simulation
+    // Run the simulation
     Simulation simulation(galaxy1, galaxy2, iterations);
     simulation.run();
 }
