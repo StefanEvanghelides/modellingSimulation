@@ -27,7 +27,7 @@ private:
     const Coordinate nearTopRight;
     const Coordinate center;
 
-    Coordinate centerOfMass;
+    double totalMass;
 
     std::unique_ptr<Octree> children[8] = {}; // subtrees
     std::vector<Star> stars = {}; // elements; empty unless we are at a leaf node

@@ -2,9 +2,10 @@
 
 Octree::Octree(const Coordinate &farBottomLeft, const Coordinate &nearTopRight)
 :
-	farBottomLeft{farBottomLeft},
-	nearTopRight{nearTopRight},
-	center{middleCoord(farBottomLeft, nearTopRight)}
+	farBottomLeft {farBottomLeft},
+	nearTopRight {nearTopRight},
+	center {middleCoord(farBottomLeft, nearTopRight)},
+    totalMass {0.0f}
 {}
 
 void Octree::insert(const Star &star)
@@ -33,9 +34,10 @@ void Octree::insert(const Star &star)
         auto toMove = std::move(stars);
         stars.clear();
         for (auto &star : toMove)
-        	insert(std::move(star));
+            insert(std::move(star));
 	}
 
+    totalMass += star.getMass();
 	child->insert(std::move(star));
 }
 
@@ -65,7 +67,7 @@ std::ostream& Octree::print(std::ostream& os, const std::string& indentStep, con
 {
     os << currentIndent
        << "Octree " << farBottomLeft
-       << " to " << nearTopRight << '\n';
+       << " to " << nearTopRight << " MASS: " << totalMass << '\n';
     if (!os) { return os; }
     for (auto const& star : stars) {
         os << currentIndent << "- " << star << '\n';

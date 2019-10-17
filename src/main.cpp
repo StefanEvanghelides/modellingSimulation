@@ -10,8 +10,8 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter2 {800, 500, 500};
 
     // User input - number of stars
-    const size_t nrStars1 = 10;
-    const size_t nrStars2 = 10;
+    const size_t nrStars1 = 5;
+    const size_t nrStars2 = 5;
 
     // User input - number of iterations
     const size_t iterations = 10;
@@ -21,6 +21,12 @@ int main(int argc, char** argv)
 
     galaxy1.showGalaxy();
     galaxy2.showGalaxy();
+
+    // Show total mass of stars
+    double totalMass = 0.0f;
+    for (const Star& star : galaxy1.getStars()) totalMass += star.getMass();
+    for (const Star& star : galaxy2.getStars()) totalMass += star.getMass();
+    std::cout << "Total Mass: " << totalMass << std::endl;
 
     // Run the simulation
     Simulation simulation(galaxy1, galaxy2, iterations);
