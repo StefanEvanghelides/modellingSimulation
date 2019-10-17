@@ -1,6 +1,5 @@
 #include "simulation.h"
 #include "../utils/constants.h"
-#include "../octree/octree.h"
 #include <sstream>
 #include <fstream>
 #include <sys/types.h>
@@ -40,23 +39,53 @@ void Simulation::run()
     // Run the simulation
     for (size_t iter = 0; iter < iterations; iter++)
     {
+        if (iter == 2) break; // run only first 2 iterations for testing purposes.
+        std::cout << std::endl;
+        std::cout << " ------- Iteration " << iter << " ------- " << std::endl;
+
+
         update(iter);
     }
 }
 
 void Simulation::update(size_t iteration)
 {
-    for (Star& star : stars)
-    {
-        for (Star& other : stars)
-        {
-            if (star == other) continue; // skip the same star
-
-            // DO something here
-            // Update stars
-        }
-    }
+    // Export the current state of the stars to a file.
+    // The export is executed first in order to show the initial state of the galaxies.
     exportIteration(iteration);
+
+    // Generate the octree.
+    Octree tree = generateOctree();
+    tree.showTree();
+
+    // Udate the stars from the tree.
+    updateTreeForces(tree);
+
+    // Save the new state of the stars.
+    updateStars(tree);
+}
+
+// Generate the octree based on the current state of the stars.
+Octree Simulation::generateOctree()
+{
+    Octree tree { {0}, { UNI_MAX } };
+    for (const Star& star : stars)
+    {
+        tree.insert(star);
+    }
+    return tree;
+}
+
+// Udate the stars from the tree.
+void Simulation::updateTreeForces(Octree& tree)
+{
+
+}
+
+// Save the new state of the stars.
+void Simulation::updateStars(Octree& tree)
+{
+
 }
 
 // Writes the iteration status to the file in "data" folder.

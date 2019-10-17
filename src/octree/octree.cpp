@@ -61,25 +61,35 @@ std::ostream& operator<<(std::ostream& os, const Star& star)
     return os << star.getCoord();
 }
 
-std::ostream& Octree::print(std::ostream& os, const std::string& indent) const
+std::ostream& Octree::print(std::ostream& os, const std::string& indentStep, const std::string& currentIndent) const
 {
-    os << indent
+    os << currentIndent
        << "Octree " << farBottomLeft
        << " to " << nearTopRight << '\n';
     if (!os) { return os; }
     for (auto const& star : stars) {
-        os << indent << "- " << star << '\n';
+        os << currentIndent << "- " << star << '\n';
     }
     if (!os) { return os; }
     for (auto i = 0u;  i < std::size(children);  ++i) {
         if (children[i]) {
-            os << indent
+            os << currentIndent
                << (i & 1 ? "far" : "near") << ' '
                << (i & 2 ? "bottom" : "top") << ' '
                << (i & 4 ? "left" : "right") << ": \n";
-            children[i]->print(os, indent+"  ");
+            children[i]->print(os, indentStep, currentIndent+indentStep);
             if (!os) { return os; }
         }
     }
     return os;
+}
+
+void Octree::showTree(std::string indentation)
+{
+    print(std::cout, indentation, "");
+}
+
+void Octree::showTree()
+{
+    showTree("  ");
 }

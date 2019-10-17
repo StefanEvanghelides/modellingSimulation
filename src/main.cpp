@@ -9,15 +9,6 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter1 {200, 500, 500};
     const Coordinate galaxyCenter2 {800, 500, 500};
 
-    Octree tree { {0}, { UNI_MAX } };
-    tree.insert(initializeStar(galaxyCenter1));
-    tree.insert(initializeStar(galaxyCenter1));
-    tree.insert(initializeStar(galaxyCenter1));
-    tree.insert(initializeStar(galaxyCenter2));
-    tree.insert(initializeStar(galaxyCenter2));
-    tree.insert(initializeStar(galaxyCenter2));
-    tree.print(std::cout, " ");
-
     // User input - number of stars
     const size_t nrStars1 = 10;
     const size_t nrStars2 = 10;
