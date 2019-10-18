@@ -21,12 +21,14 @@ public:
 
 private:
     bool isLeaf() const;
+    void updateCenterOfMass(const Star &star);
 
 private:
     const Coordinate farBottomLeft;
     const Coordinate nearTopRight;
     const Coordinate center;
 
+    Coordinate centerOfMass;
     double totalMass;
 
     std::unique_ptr<Octree> children[8] = {}; // subtrees
