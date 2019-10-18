@@ -18,6 +18,17 @@ def plot_stars(coordinates, filename):
     axes.set_ylim(200, 1000)
     axes.set_zlim(200, 1000)
 
+    # Hide grid lines
+    axes.grid(False)
+
+    # Hide axes ticks
+    axes.set_xticks([])
+    axes.set_yticks([])
+    axes.set_zticks([])
+    axes.set_axis_off()
+
+    axes.set_facecolor('black')
+
     wframe = None
 
     x = []
@@ -32,7 +43,7 @@ def plot_stars(coordinates, filename):
         axes.collections.remove(wframe)
     wframe = axes.scatter(x, y, z, s=1.0, c='green')
 
-    fig.savefig(filename + '.png')
+    fig.savefig(filename + '.png', figsize=(15, 15), dpi=200)
 
 
 def plot_file(file):

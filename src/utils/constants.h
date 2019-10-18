@@ -9,12 +9,12 @@
 #include <cmath>
 
 // Newton's Gravity Constant
-const double G = 6.6743 * pow(10,-11);
+const double G = 6.6743 * pow(10, -11);
 
 // Minimum and maximum allowed mass for the stars.
 // The values are in Solar Mass.
-constexpr double MASS_MIN = 150;
-constexpr double MASS_MAX = 1000;
+constexpr double MASS_MIN = 1.5;
+constexpr double MASS_MAX = 10;
 
 // Assume that the universe is a cube of coordinates
 // (0,0,0) and (UNI_MAX, UNI_MAX, UNI_MAX).
