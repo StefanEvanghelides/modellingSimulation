@@ -20,6 +20,8 @@ public:
     void showTree(std::string indentation);
     void showTree();
 
+    double getTotalMass() const {return totalMass;}
+    Coordinate getCenterOfMass() const {return centerOfMass;}
     Coordinate calculateForce(const Star& star);
 
 private:

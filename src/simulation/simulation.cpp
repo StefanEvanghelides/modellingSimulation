@@ -74,12 +74,27 @@ Octree Simulation::generateOctree()
 // Save the new state of the stars.
 void Simulation::updateStars(Octree& tree)
 {
+    removeOutOfBounds();
     for (Star& star : stars)
     {
         Coordinate force = tree.calculateForce(star);
-        star.setDir(star.getDir() + force);
+        star.setDir(star.getDir() + force * pow(10, 2));
         star.setCoord(star.getCoord() + star.getDir());
     }
+}
+
+void Simulation::removeOutOfBounds()
+{
+    size_t nStars = stars.size();
+    stars.erase(std::remove_if(stars.begin(), stars.end(),
+        [] (const Star& star) {
+            Coordinate c = star.getCoord();
+            return (c.x < 0 || c.y < 0 || c.z < 0 ||
+                    c.x > UNI_MAX || c.y > UNI_MAX || c.z > UNI_MAX);
+        }
+    ), stars.end());
+    if (nStars != stars.size())
+        std::cout << nStars - stars.size() << " stars went out of bounds.\n";
 }
 
 // Writes the iteration status to the file in "data" folder.
