@@ -2,31 +2,31 @@
 
 Octree::Octree(const Coordinate &farBottomLeft, const Coordinate &nearTopRight)
 :
-	farBottomLeft {farBottomLeft},
-	nearTopRight {nearTopRight},
-	center {middleCoord(farBottomLeft, nearTopRight)},
+    farBottomLeft {farBottomLeft},
+    nearTopRight {nearTopRight},
+    center {middleCoord(farBottomLeft, nearTopRight)},
     totalMass {0.0f}
 {}
 
 void Octree::insert(const Star &star)
 {
-	if (stars.empty() && isLeaf())
-	{
-		stars.emplace_back(std::move(star));
-		return;
-	}
+    if (stars.empty() && isLeaf())
+    {
+        stars.emplace_back(std::move(star));
+        return;
+    }
 
-	const bool left = star.getCoord().x < center.x;
-	const bool down = star.getCoord().y < center.y;
-	const bool far = star.getCoord().z < center.z;
+    const bool left = star.getCoord().x < center.x;
+    const bool down = star.getCoord().y < center.y;
+    const bool far = star.getCoord().z < center.z;
 
-	auto &child = children[4 * left + 2 * down + far];
+    auto &child = children[4 * left + 2 * down + far];
 
-	if (!child)
-	{
-		Coordinate fbl = farBottomLeft; // calculate FBL and NTR for subtree
-		Coordinate ntr = nearTopRight;
-		(left ? ntr : fbl).x = center.x;
+    if (!child)
+    {
+        Coordinate fbl = farBottomLeft; // calculate FBL and NTR for subtree
+        Coordinate ntr = nearTopRight;
+        (left ? ntr : fbl).x = center.x;
         (down ? ntr : fbl).y = center.y;
         (far ? ntr : fbl).z = center.z;
         
@@ -35,18 +35,18 @@ void Octree::insert(const Star &star)
         stars.clear();
         for (auto &star : toMove)
             insert(std::move(star));
-	}
+    }
 
     totalMass += star.getMass();
-	child->insert(std::move(star));
+    child->insert(std::move(star));
 }
 
 // check if all children are null
 bool Octree::isLeaf() const
 {
-	for (auto& x : children)
-		if (x) return 0;
-	return 1;
+    for (auto& x : children)
+        if (x) return 0;
+    return 1;
 }
 
 
