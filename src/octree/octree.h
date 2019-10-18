@@ -3,6 +3,7 @@
 
 #include "../models/star.h"
 #include "../utils/coordinate.h"
+#include "../utils/constants.h"
 #include <memory>
 #include <vector>
 
@@ -18,6 +19,8 @@ public:
     }
     void showTree(std::string indentation);
     void showTree();
+
+    Coordinate calculateForce(const Star& star);
 
 private:
     bool isLeaf() const;

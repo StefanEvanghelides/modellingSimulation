@@ -39,10 +39,8 @@ void Simulation::run()
     // Run the simulation
     for (size_t iter = 0; iter < iterations; iter++)
     {
-        if (iter == 2) break; // run only first 2 iterations for testing purposes.
         std::cout << std::endl;
         std::cout << " ------- Iteration " << iter << " ------- " << std::endl;
-
 
         update(iter);
     }
@@ -56,12 +54,9 @@ void Simulation::update(size_t iteration)
 
     // Generate the octree.
     Octree tree = generateOctree();
-    tree.showTree();
+    // tree.showTree();
 
-    // Udate the stars from the tree.
-    updateTreeForces(tree);
-
-    // Save the new state of the stars.
+    // Calculate forces and update stars.
     updateStars(tree);
 }
 
@@ -76,16 +71,15 @@ Octree Simulation::generateOctree()
     return tree;
 }
 
-// Udate the stars from the tree.
-void Simulation::updateTreeForces(Octree& tree)
-{
-
-}
-
 // Save the new state of the stars.
 void Simulation::updateStars(Octree& tree)
 {
-
+    for (Star& star : stars)
+    {
+        Coordinate force = tree.calculateForce(star);
+        star.setDir(star.getDir() + force);
+        star.setCoord(star.getCoord() + star.getDir());
+    }
 }
 
 // Writes the iteration status to the file in "data" folder.
@@ -104,10 +98,19 @@ const std::string Simulation::getFileName(size_t iteration)
     const size_t nrStars1 = galaxy1.getNrStars();
     const size_t nrStars2 = galaxy2.getNrStars();
 
+    size_t i = iteration;
+    if (i == 0) i++;
+    std::string padding = "";
+    while (i < iterations)
+    {
+        padding.append("0");
+        i *= 10;
+    }
+
     std::stringstream ss;
     ss  << nrStars1 << "-by-" << nrStars2
         << "_iterations=" << this->iterations
-        << "_step=" << iteration
+        << "_step=" << padding << iteration
         << ".dat"; // extension
 
     return ss.str();
@@ -157,16 +160,3 @@ bool directoryExists(const char *path)
     else
         return false;
 }
-
-// Gravitational Force formula
-double gravitationalForce(const Star& s1, const Star& s2)
-{
-    const Coordinate c1 = s1.getCoord();
-    const Coordinate c2 = s2.getCoord();
-    double r = distance(c1, c2);
-    double m1 = s1.getMass();
-    double m2 = s2.getMass();
-
-    return G * m1 * m2 / pow(r, 2);
-}
-

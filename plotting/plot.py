@@ -44,6 +44,8 @@ def plot_data(path):
 
     # Read all files from directory.
     files = glob.glob(path + "/*")
+    files = sorted(files)
+    print(files)
 
     # For each file, read its contents and plot it.
     for file in files:

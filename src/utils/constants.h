@@ -26,6 +26,9 @@ constexpr double UNI_MAX_DEV = 100;
 constexpr double DIR_MIN = -0.1;
 constexpr double DIR_MIN_DEV = 0.2;
 
+// Theta
+constexpr double THETA = 0.5;
+
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
 

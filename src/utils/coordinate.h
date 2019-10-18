@@ -18,8 +18,24 @@ typedef struct Coordinate
     {
         std::cout << "(" << x << "," << y << "," << z << ")";
     }
+    
+    Coordinate operator+(const Coordinate &other) const
+    {
+        return Coordinate { x + other.x, y + other.y, z + other.z };
+    }
 
-    // static Coordinate middleCoord(const Coordinate& coord1, const Coordinate& coord2);
+    Coordinate operator*(const size_t &multiplier) const
+    {
+        return Coordinate { x * multiplier, y * multiplier, z * multiplier };
+    }
+
+    Coordinate &operator+=(const Coordinate &other)
+    {
+        this->x += other.x;
+        this->y += other.y;
+        this->z += other.z;
+        return *this;
+    }
 
 } Coordinate;
 

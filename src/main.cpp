@@ -9,12 +9,18 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter1 {200, 500, 500};
     const Coordinate galaxyCenter2 {800, 500, 500};
 
-    // User input - number of stars
-    const size_t nrStars1 = 5;
-    const size_t nrStars2 = 5;
+    size_t nrStars1 = 10;
+    size_t nrStars2 = 10;
+    size_t iterations = 100;
 
+    // User input - number of stars
     // User input - number of iterations
-    const size_t iterations = 10;
+    if (argc > 1)
+    {
+        nrStars1 = atoi(argv[1]);
+        nrStars2 = atoi(argv[2]);
+        iterations = atoi(argv[3]);
+    }
 
     Galaxy galaxy1 {galaxyCenter1, nrStars1};
     Galaxy galaxy2 {galaxyCenter2, nrStars2};

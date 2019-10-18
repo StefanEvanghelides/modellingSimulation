@@ -25,3 +25,17 @@ void Star::showStar() const
     dir.showCoordinate();
     std::cout << ";  M: " << mass << std::endl;
 }
+
+void Star::printCenterOfMassWith(const Star &other)
+{
+    double m = mass + other.getMass();
+    Coordinate otherCoord = other.getCoord();
+    double otherMass = other.getMass();
+
+    double newX = (coord.x * mass + otherCoord.x * otherMass) / m;
+    double newY = (coord.y * mass + otherCoord.y * otherMass) / m;
+    double newZ = (coord.z * mass + otherCoord.z * otherMass) / m;
+
+    coord = Coordinate { newX, newY, newZ };
+    std::cout << "{ " << coord.x << ", " << coord.y << ", " << coord.z << " }\n";
+}

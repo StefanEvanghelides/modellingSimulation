@@ -42,6 +42,59 @@ void Octree::insert(const Star &star)
     child->insert(std::move(star));
 }
 
+Coordinate gravitationalForce(const Star& s1, const Star& s2)
+{
+    const Coordinate c1 = s1.getCoord();
+    const Coordinate c2 = s2.getCoord();
+    double m1 = s1.getMass();
+    double m2 = s2.getMass();
+
+    double forceX = G * m1 * m2 / pow(c1.x - c2.x, 2);
+    double forceY = G * m1 * m2 / pow(c1.y - c2.y, 2);
+    double forceZ = G * m1 * m2 / pow(c1.z - c2.z, 2);
+
+    return Coordinate { forceX, forceY, forceZ };
+}
+
+Coordinate gravitationalForce(const Star& s1, const Octree& node)
+{
+    const Coordinate c1 = s1.getCoord();
+    const Coordinate c2 = node.getCenterOfMass();
+    double m1 = s1.getMass();
+    double m2 = node.getTotalMass();
+
+    double forceX = G * m1 * m2 / pow(c1.x - c2.x, 2);
+    double forceY = G * m1 * m2 / pow(c1.y - c2.y, 2);
+    double forceZ = G * m1 * m2 / pow(c1.z - c2.z, 2);
+
+    return Coordinate { forceX, forceY, forceZ };
+}
+
+Coordinate Octree::calculateForce(const Star& star)
+{
+    if (isLeaf())
+    {
+        Star leafStar = stars.front();
+        if (leafStar.getId() == star.getId())
+            return Coordinate(); // return 0, star doesn't exert force on itself
+        return gravitationalForce(star, leafStar);
+    }
+
+    double s = nearTopRight.x - farBottomLeft.x;
+    double d = distance(star.getCoord(), centerOfMass);
+
+    if (s / d < THETA) // Far enough away to consider node a star
+        return gravitationalForce(star, *this);
+
+    // node is too close, recurse
+    Coordinate force = Coordinate();
+    for (auto& child : children)
+        if (child)
+            force += child->calculateForce(star);
+
+    return force;
+}
+
 // check if all children are null
 bool Octree::isLeaf() const
 {

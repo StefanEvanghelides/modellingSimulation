@@ -26,6 +26,7 @@ public:
 
     const std::string exportString() const;
     void showStar() const;
+    void printCenterOfMassWith(const Star &other);
 
 private:
     size_t id;
