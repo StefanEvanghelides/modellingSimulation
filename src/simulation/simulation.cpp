@@ -78,7 +78,7 @@ void Simulation::updateStars(Octree& tree)
     for (Star& star : stars)
     {
         Coordinate force = tree.calculateForce(star);
-        star.setDir(star.getDir() + force * pow(10, 2));
+        star.setDir(star.getDir() + force);
         star.setCoord(star.getCoord() + star.getDir());
     }
 }
