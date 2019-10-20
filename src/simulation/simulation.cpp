@@ -4,11 +4,13 @@
 #include <fstream>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <algorithm>
+#include <chrono>
+
+typedef std::chrono::high_resolution_clock Clock;
 
 void Simulation::run()
 {
-    std::cout << "Running the simulation!" << std::endl;
-    
     // Combine stars from galaxies
     std::vector<Star> stars1 = galaxy1.getStars();
     std::vector<Star> stars2 = galaxy2.getStars();
@@ -35,17 +37,27 @@ void Simulation::run()
             std::cout << "Directory created successful!" << std::endl;
         }
     }
+    else if (debugMode)
+    {
+        std::cout << "Directory already exists! Nothing needs to be done" << std::endl;
+    }
 
-    // Run the simulation
+    // Run the simulation.
+    // Also start a timer
+    auto startTime = Clock::now();
     for (size_t iter = 0; iter < iterations; iter++)
     {
-        if (iter == 2) break; // run only first 2 iterations for testing purposes.
-        std::cout << std::endl;
-        std::cout << " ------- Iteration " << iter << " ------- " << std::endl;
-
-
+        if (debugMode)
+        {
+            std::cout << " ----- Iteration " << iter << " ----- " << std::endl;
+        }
         update(iter);
     }
+    auto endTime = Clock::now();
+    std::chrono::duration<double> duration = endTime - startTime;
+    std::cout << "Total time: "
+              << std::chrono::duration_cast<std::chrono::seconds>(duration).count()
+              << " seconds!" << std::endl;
 }
 
 void Simulation::update(size_t iteration)
@@ -56,12 +68,9 @@ void Simulation::update(size_t iteration)
 
     // Generate the octree.
     Octree tree = generateOctree();
-    tree.showTree();
+    // tree.showTree();
 
-    // Udate the stars from the tree.
-    updateTreeForces(tree);
-
-    // Save the new state of the stars.
+    // Calculate forces and update stars.
     updateStars(tree);
 }
 
@@ -76,16 +85,30 @@ Octree Simulation::generateOctree()
     return tree;
 }
 
-// Udate the stars from the tree.
-void Simulation::updateTreeForces(Octree& tree)
-{
-
-}
-
 // Save the new state of the stars.
 void Simulation::updateStars(Octree& tree)
 {
+    removeOutOfBounds();
+    for (Star& star : stars)
+    {
+        Coordinate force = tree.calculateForce(star);
+        star.setDir(star.getDir() + force);
+        star.setCoord(star.getCoord() + star.getDir());
+    }
+}
 
+void Simulation::removeOutOfBounds()
+{
+    size_t nStars = stars.size();
+    stars.erase(std::remove_if(stars.begin(), stars.end(),
+        [] (const Star& star) {
+            Coordinate c = star.getCoord();
+            return (c.x < 0 || c.y < 0 || c.z < 0 ||
+                    c.x > UNI_MAX || c.y > UNI_MAX || c.z > UNI_MAX);
+        }
+    ), stars.end());
+    if (debugMode && nStars != stars.size())
+        std::cout << nStars - stars.size() << " stars went out of bounds.\n";
 }
 
 // Writes the iteration status to the file in "data" folder.
@@ -104,10 +127,19 @@ const std::string Simulation::getFileName(size_t iteration)
     const size_t nrStars1 = galaxy1.getNrStars();
     const size_t nrStars2 = galaxy2.getNrStars();
 
+    size_t i = iteration;
+    if (i == 0) i++;
+    std::string padding = "";
+    while (i < iterations)
+    {
+        padding.append("0");
+        i *= 10;
+    }
+
     std::stringstream ss;
     ss  << nrStars1 << "-by-" << nrStars2
         << "_iterations=" << this->iterations
-        << "_step=" << iteration
+        << "_step=" << padding << iteration
         << ".dat"; // extension
 
     return ss.str();
@@ -157,16 +189,3 @@ bool directoryExists(const char *path)
     else
         return false;
 }
-
-// Gravitational Force formula
-double gravitationalForce(const Star& s1, const Star& s2)
-{
-    const Coordinate c1 = s1.getCoord();
-    const Coordinate c2 = s2.getCoord();
-    double r = distance(c1, c2);
-    double m1 = s1.getMass();
-    double m2 = s2.getMass();
-
-    return G * m1 * m2 / pow(r, 2);
-}
-

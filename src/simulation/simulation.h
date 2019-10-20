@@ -18,11 +18,11 @@ public:
 private: // Private functions
     void update(size_t iteration);
     Octree generateOctree();
-    void updateTreeForces(Octree& tree);
     void updateStars(Octree& tree);
     void exportIteration(size_t iteration);
     const std::string getFileName(size_t iteration);
     void writeToFile(const std::string& fileName);
+    void removeOutOfBounds();
 
 private: // Private members
     Galaxy galaxy1;

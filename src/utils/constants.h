@@ -9,7 +9,7 @@
 #include <cmath>
 
 // Newton's Gravity Constant
-const double G = 6.6743 * pow(10,-11);
+const double G = 6.6743 * pow(10, -11);
 
 // Minimum and maximum allowed mass for the stars.
 // The values are in Solar Mass.
@@ -26,7 +26,13 @@ constexpr double UNI_MAX_DEV = 100;
 constexpr double DIR_MIN = -0.1;
 constexpr double DIR_MIN_DEV = 0.2;
 
+// Theta
+constexpr double THETA = 0.5;
+
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
+
+// Declare the debug mode, it is false by default
+inline bool debugMode = false;
 
 #endif // _CONSTANTS_H
