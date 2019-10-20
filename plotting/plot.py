@@ -114,4 +114,5 @@ if __name__ == '__main__':
     if os.path.exists(dataPath):
         plot_data() # This uses the global dataPath
     else:
-        print("Directory does not exists! Nothing to plot!")
+        print("\n      Data directory does not exists! Nothing to plot!")
+        print("HINT: Data directory is generated automatically after running the simulation!\n")
