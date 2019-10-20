@@ -89,5 +89,8 @@ def plot_data(path):
 
 if __name__ == '__main__':
     dataDirectory = "data/"
-    path = os.path.abspath(dataDirectory)
-    plot_data(path)
+    pathDirectory = os.path.abspath(dataDirectory)
+    if (os.path.exists(pathDirectory)):
+        plot_data(path)
+    else:
+        print("Directory does not exists! Nothing to plot!")
