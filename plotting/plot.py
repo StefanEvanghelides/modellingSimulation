@@ -14,21 +14,16 @@ dataDirectory = "data/"
 dataPath = os.path.abspath(dataDirectory)
 resultsDirectory = "plotting_results"
 resultsPath = os.path.abspath(resultsDirectory)
-if os.path.exists(resultsPath):
-    shutil.rmtree(resultsPath)
-if not os.path.exists(resultsPath):
-    os.makedirs(resultsPath)
-
 
 def saveFigure(fig, file):
     # First, retrieve only the name of th file
     filename = os.path.basename(file)
 
     # Ensure that file is sent to the correct Results directory
-    resultFile = os.path.join(resultsPath, filename)
+    resultsFile = os.path.join(resultsPath, filename)
 
     # Save the plot
-    fig.savefig(resultFile + '.png', figsize=(15, 15), dpi=200)
+    fig.savefig(resultsFile + '.png', figsize=(15, 15), dpi=200)
 
 
 # Plots the coordinates of stars for one iteration
@@ -111,6 +106,12 @@ def plot_data(dataPath=dataPath):
     print("Rendered " + str(len(files)) + " frames in " + str(elapsed_time) + " seconds.")
 
 if __name__ == '__main__':
+    # Remove the existing Results directory, create an empty one
+    if os.path.exists(resultsPath):
+        shutil.rmtree(resultsPath)
+    if not os.path.exists(resultsPath):
+        os.makedirs(resultsPath)
+
     if os.path.exists(dataPath):
         plot_data() # This uses the global dataPath
     else:
