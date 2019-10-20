@@ -32,4 +32,7 @@ constexpr double THETA = 0.5;
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
 
+// Declare the debug mode, it is false by default
+inline bool debugMode = false;
+
 #endif // _CONSTANTS_H

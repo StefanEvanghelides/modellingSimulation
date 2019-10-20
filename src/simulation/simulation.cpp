@@ -11,8 +11,6 @@ typedef std::chrono::high_resolution_clock Clock;
 
 void Simulation::run()
 {
-    std::cout << "Running the simulation!" << std::endl;
-    
     // Combine stars from galaxies
     std::vector<Star> stars1 = galaxy1.getStars();
     std::vector<Star> stars2 = galaxy2.getStars();
@@ -39,12 +37,20 @@ void Simulation::run()
             std::cout << "Directory created successful!" << std::endl;
         }
     }
+    else if (debugMode)
+    {
+        std::cout << "Directory already exists! Nothing needs to be done" << std::endl;
+    }
 
     // Run the simulation.
     // Also start a timer
     auto startTime = Clock::now();
     for (size_t iter = 0; iter < iterations; iter++)
     {
+        if (debugMode)
+        {
+            std::cout << " ----- Iteration " << iter << " ----- " << std::endl;
+        }
         update(iter);
     }
     auto endTime = Clock::now();
@@ -101,7 +107,7 @@ void Simulation::removeOutOfBounds()
                     c.x > UNI_MAX || c.y > UNI_MAX || c.z > UNI_MAX);
         }
     ), stars.end());
-    if (nStars != stars.size())
+    if (debugMode && nStars != stars.size())
         std::cout << nStars - stars.size() << " stars went out of bounds.\n";
 }
 
