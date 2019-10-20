@@ -12,7 +12,7 @@ matplotlib.use('Agg')
 # Global "data" and "results" paths
 dataDirectory = "data/"
 dataPath = os.path.abspath(dataDirectory)
-resultsDirectory = "plotting_results"
+resultsDirectory = "plotting_result"
 resultsPath = os.path.abspath(resultsDirectory)
 
 # Global universe size.

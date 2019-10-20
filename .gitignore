@@ -11,7 +11,8 @@ TMP/
 **/RUN*
 **/*vscode*
 data/
-plotting_results/
+plotting_result/
+video_result/
 
 # Distribution / packaging
 .Python
