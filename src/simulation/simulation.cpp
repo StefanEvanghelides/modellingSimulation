@@ -4,6 +4,10 @@
 #include <fstream>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <algorithm>
+#include <chrono>
+
+typedef std::chrono::high_resolution_clock Clock;
 
 void Simulation::run()
 {
@@ -36,14 +40,18 @@ void Simulation::run()
         }
     }
 
-    // Run the simulation
+    // Run the simulation.
+    // Also start a timer
+    auto startTime = Clock::now();
     for (size_t iter = 0; iter < iterations; iter++)
     {
-        std::cout << std::endl;
-        std::cout << " ------- Iteration " << iter << " ------- " << std::endl;
-
         update(iter);
     }
+    auto endTime = Clock::now();
+    std::chrono::duration<double> duration = endTime - startTime;
+    std::cout << "Total time: "
+              << std::chrono::duration_cast<std::chrono::seconds>(duration).count()
+              << " seconds!" << std::endl;
 }
 
 void Simulation::update(size_t iteration)

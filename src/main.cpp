@@ -9,8 +9,8 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter1 {200, 500, 500};
     const Coordinate galaxyCenter2 {800, 500, 500};
 
-    size_t nrStars1 = 10;
-    size_t nrStars2 = 10;
+    size_t nrStars1 = 1000;
+    size_t nrStars2 = 1000;
     size_t iterations = 100;
 
     // User input - number of stars
@@ -25,8 +25,9 @@ int main(int argc, char** argv)
     Galaxy galaxy1 {galaxyCenter1, nrStars1};
     Galaxy galaxy2 {galaxyCenter2, nrStars2};
 
-    galaxy1.showGalaxy();
-    galaxy2.showGalaxy();
+    // Show galaxies for debbuging purposes
+    //galaxy1.showGalaxy();
+    //galaxy2.showGalaxy();
 
     // Show total mass of stars
     double totalMass = 0.0f;
