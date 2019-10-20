@@ -1,9 +1,9 @@
 # Metadata: DIR is specified in environment
-TARGET = ./run
+TARGET = run
 
 # Compiler specs
 CXX = g++
-CXXFLAGS = -Wall -std=c++2a -pthread
+CXXFLAGS = -Wall -std=c++17 -fopenmp
 
 # Sources and headers
 # USE "dir /s /b *.cpp" to show all *.cpp files recursively
@@ -14,4 +14,4 @@ $(TARGET):
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $@
 
 clean:
-	rm -rf RUN
+	rm -rf run

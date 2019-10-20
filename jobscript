@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --time=00:09:00
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=96000
+#SBATCH --job-name=nbodysim
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=h.folkertsma.1@student.rug.nl
+#SBATCH --output=job-%j.log
+
+srun ./run 100000 100000 100

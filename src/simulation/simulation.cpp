@@ -78,6 +78,7 @@ void Simulation::update(size_t iteration)
 Octree Simulation::generateOctree()
 {
     Octree tree { {0}, { UNI_MAX } };
+
     for (const Star& star : stars)
     {
         tree.insert(star);
@@ -89,11 +90,15 @@ Octree Simulation::generateOctree()
 void Simulation::updateStars(Octree& tree)
 {
     removeOutOfBounds();
-    for (Star& star : stars)
+
+    size_t nStars = stars.size();
+
+    #pragma omp parallel for
+    for (size_t i = 0; i < nStars; ++i)
     {
-        Coordinate force = tree.calculateForce(star);
-        star.setDir(star.getDir() + force);
-        star.setCoord(star.getCoord() + star.getDir());
+        Coordinate force = tree.calculateForce(stars[i]);
+        stars[i].setDir(stars[i].getDir() + force);
+        stars[i].setCoord(stars[i].getCoord() + stars[i].getDir());
     }
 }
 
