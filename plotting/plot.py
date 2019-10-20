@@ -15,6 +15,10 @@ dataPath = os.path.abspath(dataDirectory)
 resultsDirectory = "plotting_results"
 resultsPath = os.path.abspath(resultsDirectory)
 
+# Global universe size.
+# This should be the same as the UNI_MAX in src/utils/constants.h
+UNI_MAX = 1000000
+
 def saveFigure(fig, file):
     # First, retrieve only the name of th file
     filename = os.path.basename(file)
@@ -30,9 +34,9 @@ def saveFigure(fig, file):
 def plot_stars(coordinates, filename):
     fig = plt.figure()
     axes = fig.add_subplot(111, projection='3d')
-    axes.set_xlim(200, 1000)
-    axes.set_ylim(200, 1000)
-    axes.set_zlim(200, 1000)
+    axes.set_xlim(-100, UNI_MAX * 1.1)
+    axes.set_ylim(-100, UNI_MAX * 1.1)
+    axes.set_zlim(-100, UNI_MAX * 1.1)
 
     # Hide grid lines
     axes.grid(False)

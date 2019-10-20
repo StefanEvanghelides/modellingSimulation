@@ -19,8 +19,8 @@ constexpr double MASS_MAX = 10;
 // Assume that the universe is a cube of coordinates
 // (0,0,0) and (UNI_MAX, UNI_MAX, UNI_MAX).
 // The second constant is the deviation.
-constexpr double UNI_MAX = 1000;
-constexpr double UNI_MAX_DEV = 100;
+constexpr double UNI_MAX = 1000000;
+constexpr double UNI_MAX_DEV = UNI_MAX / 10;
 
 // Minimum star speed and speed deviation
 constexpr double DIR_MIN = -0.1;
