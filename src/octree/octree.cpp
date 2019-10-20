@@ -67,9 +67,19 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
     double m1 = s1.getMass();
     double m2 = node.getTotalMass();
 
-    double forceX = G * m1 * m2 / pow(c1.x - c2.x, 2);
-    double forceY = G * m1 * m2 / pow(c1.y - c2.y, 2);
-    double forceZ = G * m1 * m2 / pow(c1.z - c2.z, 2);
+    Coordinate dc;
+    if (distance(c1, c2) < STARS_MIN_DIST)
+    {
+        dc = {STARS_MIN_DIST};
+    }
+    else
+    {
+        dc = {c2 - c1};
+    }
+
+    double forceX = G * m1 * m2 / pow(dc.x, 2);
+    double forceY = G * m1 * m2 / pow(dc.y, 2);
+    double forceZ = G * m1 * m2 / pow(dc.z, 2);
 
     if (c1.x > c2.x) forceX *= -1;
     if (c1.y > c2.y) forceY *= -1;
@@ -90,6 +100,7 @@ Coordinate Octree::calculateForce(const Star& star)
 
     double s = nearTopRight.x - farBottomLeft.x;
     double d = distance(star.getCoord(), centerOfMass);
+    if (d < STARS_MIN_DIST) d = STARS_MIN_DIST;
 
     if (s / d < THETA) // Far enough away to consider node a star
         return gravitationalForce(star, *this);

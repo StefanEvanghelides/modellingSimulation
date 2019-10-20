@@ -13,6 +13,8 @@ typedef struct Coordinate
         : x{oneValue}, y{oneValue}, z{oneValue} {}
     Coordinate(double x, double y, double z)
         : x{x}, y{y}, z{z} {}
+    Coordinate(const Coordinate& other)
+        : x{other.x}, y{other.y}, z{other.z} {}
 
     void showCoordinate() const
     {
@@ -22,6 +24,11 @@ typedef struct Coordinate
     Coordinate operator+(const Coordinate &other) const
     {
         return Coordinate { x + other.x, y + other.y, z + other.z };
+    }
+    
+    Coordinate operator-(const Coordinate &other) const
+    {
+        return Coordinate { x - other.x, y - other.y, z - other.z };
     }
 
     Coordinate operator*(const size_t &multiplier) const
@@ -34,6 +41,14 @@ typedef struct Coordinate
         this->x += other.x;
         this->y += other.y;
         this->z += other.z;
+        return *this;
+    }
+
+    Coordinate &operator-=(const Coordinate &other)
+    {
+        this->x -= other.x;
+        this->y -= other.y;
+        this->z -= other.z;
         return *this;
     }
 

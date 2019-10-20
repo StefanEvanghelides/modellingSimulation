@@ -37,7 +37,7 @@ void Simulation::run()
             std::cout << "Directory created successful!" << std::endl;
         }
     }
-    else if (debugMode)
+    else if (DEBUG_MODE)
     {
         std::cout << "Directory already exists! Nothing needs to be done" << std::endl;
     }
@@ -47,7 +47,7 @@ void Simulation::run()
     auto startTime = Clock::now();
     for (size_t iter = 0; iter < iterations; iter++)
     {
-        if (debugMode)
+        if (DEBUG_MODE)
         {
             std::cout << " ----- Iteration " << iter << " ----- " << std::endl;
         }
@@ -107,7 +107,7 @@ void Simulation::removeOutOfBounds()
                     c.x > UNI_MAX || c.y > UNI_MAX || c.z > UNI_MAX);
         }
     ), stars.end());
-    if (debugMode && nStars != stars.size())
+    if (DEBUG_MODE && nStars != stars.size())
         std::cout << nStars - stars.size() << " stars went out of bounds.\n";
 }
 

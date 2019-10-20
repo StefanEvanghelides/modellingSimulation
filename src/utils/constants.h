@@ -33,6 +33,10 @@ constexpr double THETA = 0.5;
 inline const char* DATA_DIRECTORY = "./data";
 
 // Declare the debug mode, it is false by default
-inline bool debugMode = false;
+inline bool DEBUG_MODE = false;
+
+// Set minimum allowed distance between the stars
+// This should be dependent on the size of the universe
+constexpr double STARS_MIN_DIST = UNI_MAX / 10000000;
 
 #endif // _CONSTANTS_H

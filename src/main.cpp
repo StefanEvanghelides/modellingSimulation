@@ -14,15 +14,15 @@ int main(int argc, char** argv)
     size_t nrStars1 = 1000;
     size_t nrStars2 = 1000;
     size_t iterations = 1000;
-    debugMode = false;
+    DEBUG_MODE = false;
 
     // User input - number of stars
     if (argc > 1) nrStars1 = atoi(argv[1]);
     if (argc > 2) nrStars2 = atoi(argv[2]);
     // User input - number of iterations
     if (argc > 3) iterations = atoi(argv[3]);
-    // User input - debugMode
-    if (argc > 4 && strnicmp(argv[4], "-d", 2)==0) debugMode = true;
+    // User input - DEBUG_MODE
+    if (argc > 4 && strnicmp(argv[4], "-d", 2)==0) DEBUG_MODE = true;
 
     //
     // --------------------------------------------------------
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     Galaxy galaxy2 {galaxyCenter2, nrStars2};
 
     // Show galaxies for debbuging purposes
-    if (debugMode)
+    if (DEBUG_MODE)
     {
         galaxy1.showGalaxy();
         galaxy2.showGalaxy();
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     for (const Star& star : galaxy2.getStars()) totalMass += star.getMass();
     std::cout << "Total Mass: " << totalMass << std::endl;
     std::cout << "The simulation runs " << iterations << " iterations." << std::endl;
-    if (debugMode) std::cout << "DEBUG MODE ACTIVE!" << std::endl;
+    if (DEBUG_MODE) std::cout << "DEBUG MODE ACTIVE!" << std::endl;
 
     // Run the simulation
     Simulation simulation(galaxy1, galaxy2, iterations);
