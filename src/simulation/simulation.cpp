@@ -132,10 +132,18 @@ const std::string Simulation::getFileName(size_t iteration)
     const size_t nrStars1 = galaxy1.getNrStars();
     const size_t nrStars2 = galaxy2.getNrStars();
 
-    size_t i = iteration;
+    size_t pad = 1;
+    size_t i = iterations;
+    while (i > 0)
+    {
+        pad *= 10;
+        i /= 10;
+    }
+
+    i = iteration;
     if (i == 0) i++;
     std::string padding = "";
-    while (i < iterations)
+    while (i < pad)
     {
         padding.append("0");
         i *= 10;
