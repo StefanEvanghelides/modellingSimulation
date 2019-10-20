@@ -81,7 +81,7 @@ def plot_data(path):
     files = glob.glob(path + "/*.dat")
     files = sorted(files)
     
-    with multiprocessing.Pool(100) as p:
+    with multiprocessing.Pool(multiprocessing.cpu_count() - 1 or 1) as p:
         p.map(plot_file, files)
 
     elapsed_time = time.time() - tstart
