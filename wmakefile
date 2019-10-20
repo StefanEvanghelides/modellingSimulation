@@ -3,8 +3,9 @@ TARGET = $(DIR)\RUN
 
 # Compiler specs
 CC = g++
-CFLAGS = -Wall -std=c++2a
+CFLAGS = -Wall -std=c++17
 PTHREADFLAGS = -pthread
+OPENMPFLAGS = -fopenmp
 
 # Sources and headers
 # USE "dir /s /b *.cc" to show all *.cc files recursively
@@ -16,7 +17,7 @@ SOURCES = 	$(DIR)\*.cpp \
 
 # Link objects and create executable
 $(TARGET):
-	$(CC) $(SOURCES) -o $@ $(CFLAGS) $(PTHREADFLAGS)
+	$(CC) $(SOURCES) -o $@ $(CFLAGS) $(OPENMPFLAGS)
 
 clean:
 	del $(DIR)\RUN*
