@@ -7,7 +7,6 @@ import time
 import sys, os
 import glob
 
-# Global figure variable
 matplotlib.use('Agg')
 
 # Plots the coordinates of stars for one iteration
@@ -44,6 +43,7 @@ def plot_stars(coordinates, filename):
     wframe = axes.scatter(x, y, z, s=1.0, c='green')
 
     fig.savefig(filename + '.png', figsize=(15, 15), dpi=200)
+    plt.close()
 
 
 def plot_file(file):
@@ -80,17 +80,9 @@ def plot_data(path):
     # Read all files from directory.
     files = glob.glob(path + "/*.dat")
     files = sorted(files)
-
-    jobs = []
-
-    # For each file, read its contents and plot it.
-    for file in files:
-        p = multiprocessing.Process(target=plot_file, args=(file,))
-        jobs.append(p)
-        p.start()
-
-    for job in jobs:
-        job.join()
+    
+    with multiprocessing.Pool(100) as p:
+        p.map(plot_file, files)
 
     elapsed_time = time.time() - tstart
     print("Rendered " + str(len(files)) + " frames in " + str(elapsed_time) + " seconds.")
