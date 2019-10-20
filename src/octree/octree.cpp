@@ -49,15 +49,27 @@ Coordinate gravitationalForce(const Star& s1, const Star& s2)
     double m1 = s1.getMass();
     double m2 = s2.getMass();
 
-    double forceX = G * m1 * m2 / pow(c1.x - c2.x, 2);
-    double forceY = G * m1 * m2 / pow(c1.y - c2.y, 2);
-    double forceZ = G * m1 * m2 / pow(c1.z - c2.z, 2);
+    Coordinate dc;
+    if (distance(c1, c2) < STARS_MIN_DIST)
+    {
+        dc = {STARS_MIN_DIST};
+    }
+    else
+    {
+        dc = {c2 - c1};
+    }
+
+    double forceX = G * m1 * m2 / pow(dc.x, 2);
+    double forceY = G * m1 * m2 / pow(dc.y, 2);
+    double forceZ = G * m1 * m2 / pow(dc.z, 2);
 
     if (c1.x > c2.x) forceX *= -1;
     if (c1.y > c2.y) forceY *= -1;
     if (c1.z > c2.z) forceZ *= -1;
 
-    return Coordinate { forceX, forceY, forceZ };
+    Coordinate force {forceX, forceY, forceZ};
+
+    return force;
 }
 
 Coordinate gravitationalForce(const Star& s1, const Octree& node)
@@ -85,7 +97,9 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
     if (c1.y > c2.y) forceY *= -1;
     if (c1.z > c2.z) forceZ *= -1;
 
-    return Coordinate { forceX, forceY, forceZ };
+    Coordinate force {forceX, forceY, forceZ};
+
+    return force;
 }
 
 Coordinate Octree::calculateForce(const Star& star)
@@ -133,7 +147,6 @@ void Octree::updateCenterOfMass(const Star &star)
     double newZ = (centerOfMass.z * totalMass + starCoord.z * starMass) / m;
 
     centerOfMass = Coordinate { newX, newY, newZ };
-    // TODO maybe update mass here too, instead of in insert
 }
 
 std::ostream& operator<<(std::ostream& os, const Coordinate pos)

@@ -7,14 +7,13 @@
 int main(int argc, char** argv)
 {
     // Default galaxy centers
-    const Coordinate galaxyCenter1 {0.2 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
-    const Coordinate galaxyCenter2 {0.8 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
+    const Coordinate galaxyCenter1 {0.25 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
+    const Coordinate galaxyCenter2 {0.75 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
 
     // Default user input
     size_t nrStars1 = 1000;
     size_t nrStars2 = 1000;
     size_t iterations = 1000;
-    DEBUG_MODE = false;
 
     // User input - number of stars
     if (argc > 1) nrStars1 = atoi(argv[1]);

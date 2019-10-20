@@ -49,7 +49,7 @@ void Simulation::run()
     {
         if (DEBUG_MODE)
         {
-            std::cout << " ----- Iteration " << iter << " ----- " << std::endl;
+            std::cout << std::endl << " ----- Iteration " << iter << " ----- " << std::endl;
         }
         update(iter);
     }
@@ -68,7 +68,7 @@ void Simulation::update(size_t iteration)
 
     // Generate the octree.
     Octree tree = generateOctree();
-    // tree.showTree();
+    //tree.showTree();
 
     // Calculate forces and update stars.
     updateStars(tree);

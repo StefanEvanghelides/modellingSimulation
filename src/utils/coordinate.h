@@ -8,7 +8,7 @@ typedef struct Coordinate
     double x, y, z;
 
     Coordinate()
-        : x{0}, y{0}, z{0} {}
+        : x{0.0}, y{0.0}, z{0.0} {}
     Coordinate(double oneValue)
         : x{oneValue}, y{oneValue}, z{oneValue} {}
     Coordinate(double x, double y, double z)
