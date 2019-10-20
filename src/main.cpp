@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     // User input - number of iterations
     if (argc > 3) iterations = atoi(argv[3]);
     // User input - DEBUG_MODE
-    if (argc > 4 && strnicmp(argv[4], "-d", 2)==0) DEBUG_MODE = true;
+    if (argc > 4 && strncmp(argv[4], "-d", 2)==0) DEBUG_MODE = true;
 
     //
     // --------------------------------------------------------
