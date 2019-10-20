@@ -4,10 +4,32 @@ from mpl_toolkits import mplot3d
 import multiprocessing
 import numpy as np
 import time
-import sys, os
+import sys, os, shutil
 import glob
 
 matplotlib.use('Agg')
+
+# Global "data" and "results" paths
+dataDirectory = "data/"
+dataPath = os.path.abspath(dataDirectory)
+resultsDirectory = "plotting_results"
+resultsPath = os.path.abspath(resultsDirectory)
+if os.path.exists(resultsPath):
+    shutil.rmtree(resultsPath)
+if not os.path.exists(resultsPath):
+    os.makedirs(resultsPath)
+
+
+def saveFigure(fig, file):
+    # First, retrieve only the name of th file
+    filename = os.path.basename(file)
+
+    # Ensure that file is sent to the correct Results directory
+    resultFile = os.path.join(resultsPath, filename)
+
+    # Save the plot
+    fig.savefig(resultFile + '.png', figsize=(15, 15), dpi=200)
+
 
 # Plots the coordinates of stars for one iteration
 def plot_stars(coordinates, filename):
@@ -42,7 +64,8 @@ def plot_stars(coordinates, filename):
         axes.collections.remove(wframe)
     wframe = axes.scatter(x, y, z, s=1.0, c='green')
 
-    fig.savefig(filename + '.png', figsize=(15, 15), dpi=200)
+    saveFigure(fig, filename)
+
     plt.close()
 
 
@@ -73,12 +96,12 @@ def plot_file(file):
     # Now plot the coordinates.
     plot_stars(coordinates, file)
 
-def plot_data(path):
-    print("Reading files from: " + str(path))
+def plot_data(dataPath=dataPath):
+    print("Reading files from: " + str(dataPath))
     tstart = time.time()
 
     # Read all files from directory.
-    files = glob.glob(path + "/*.dat")
+    files = glob.glob(dataPath + "/*.dat")
     files = sorted(files)
     
     with multiprocessing.Pool(multiprocessing.cpu_count() - 1 or 1) as p:
@@ -88,9 +111,7 @@ def plot_data(path):
     print("Rendered " + str(len(files)) + " frames in " + str(elapsed_time) + " seconds.")
 
 if __name__ == '__main__':
-    dataDirectory = "data/"
-    pathDirectory = os.path.abspath(dataDirectory)
-    if (os.path.exists(pathDirectory)):
-        plot_data(path)
+    if os.path.exists(dataPath):
+        plot_data() # This uses the global dataPath
     else:
         print("Directory does not exists! Nothing to plot!")
