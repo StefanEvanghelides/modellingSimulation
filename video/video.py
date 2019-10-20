@@ -11,6 +11,7 @@ imagesPath = os.path.abspath(imagesDirectory)
 videoDirectory = "video_result"
 videoPath = os.path.abspath(videoDirectory)
 
+FRAMES_PER_SECOND = 12
 
 def create_video():
     img_array = []
@@ -28,7 +29,7 @@ def create_video():
         img_array.append(img)
 
     videoFilePath = os.path.join(videoPath, "video.avi")
-    out = cv2.VideoWriter(videoFilePath, cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+    out = cv2.VideoWriter(videoFilePath, cv2.VideoWriter_fourcc(*'DIVX'), FRAMES_PER_SECOND, size)
 
     for i in range(len(img_array)):
         out.write(img_array[i])
