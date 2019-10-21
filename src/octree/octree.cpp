@@ -64,10 +64,6 @@ Coordinate gravitationalForce(const Star& s1, const Star& s2)
     double forceY = force * (c1.y - c2.y);
     double forceZ = force * (c1.z - c2.z);
 
-    if (c1.x > c2.x) forceX *= -1;
-    if (c1.y > c2.y) forceY *= -1;
-    if (c1.z > c2.z) forceZ *= -1;
-
     Coordinate forces {forceX, forceY, forceZ};
 
     return forces;
@@ -94,10 +90,6 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
     double forceX = force * (c1.x - c2.x);
     double forceY = force * (c1.y - c2.y);
     double forceZ = force * (c1.z - c2.z);
-
-    if (c1.x > c2.x) forceX *= -1;
-    if (c1.y > c2.y) forceY *= -1;
-    if (c1.z > c2.z) forceZ *= -1;
 
     Coordinate forces {forceX, forceY, forceZ};
 
