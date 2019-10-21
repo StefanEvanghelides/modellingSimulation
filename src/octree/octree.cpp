@@ -59,17 +59,18 @@ Coordinate gravitationalForce(const Star& s1, const Star& s2)
         dc = {c2 - c1};
     }
 
-    double forceX = G * m1 * m2 / pow(dc.x, 2);
-    double forceY = G * m1 * m2 / pow(dc.y, 2);
-    double forceZ = G * m1 * m2 / pow(dc.z, 2);
+    double force = G * m1 * m2 / pow(distance(c1, c2), 3);
+    double forceX = force * (c1.x - c2.x);
+    double forceY = force * (c1.y - c2.y);
+    double forceZ = force * (c1.z - c2.z);
 
     if (c1.x > c2.x) forceX *= -1;
     if (c1.y > c2.y) forceY *= -1;
     if (c1.z > c2.z) forceZ *= -1;
 
-    Coordinate force {forceX, forceY, forceZ};
+    Coordinate forces {forceX, forceY, forceZ};
 
-    return force;
+    return forces;
 }
 
 Coordinate gravitationalForce(const Star& s1, const Octree& node)
@@ -89,17 +90,18 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
         dc = {c2 - c1};
     }
 
-    double forceX = G * m1 * m2 / pow(dc.x, 2);
-    double forceY = G * m1 * m2 / pow(dc.y, 2);
-    double forceZ = G * m1 * m2 / pow(dc.z, 2);
+    double force = G * m1 * m2 / pow(distance(c1, c2), 3);
+    double forceX = force * (c1.x - c2.x);
+    double forceY = force * (c1.y - c2.y);
+    double forceZ = force * (c1.z - c2.z);
 
     if (c1.x > c2.x) forceX *= -1;
     if (c1.y > c2.y) forceY *= -1;
     if (c1.z > c2.z) forceZ *= -1;
 
-    Coordinate force {forceX, forceY, forceZ};
+    Coordinate forces {forceX, forceY, forceZ};
 
-    return force;
+    return forces;
 }
 
 Coordinate Octree::calculateForce(const Star& star)

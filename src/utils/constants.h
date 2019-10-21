@@ -10,7 +10,7 @@
 
 // Newton's Gravity Constant and simulation acceleration
 const double G = 6.6743 * pow(10, -11);
-constexpr double SIM_ACC = 10000;
+constexpr double SIM_ACC = 100000000;
 
 // Minimum and maximum allowed mass for the stars.
 // The values are in Solar Mass.

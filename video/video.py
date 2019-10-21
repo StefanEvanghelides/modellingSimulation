@@ -28,8 +28,8 @@ def create_video():
         size = (width,height)
         img_array.append(img)
 
-    videoFilePath = os.path.join(videoPath, "video.avi")
-    out = cv2.VideoWriter(videoFilePath, cv2.VideoWriter_fourcc(*'DIVX'), FRAMES_PER_SECOND, size)
+    videoFilePath = os.path.join(videoPath, "video.mp4")
+    out = cv2.VideoWriter(videoFilePath, cv2.VideoWriter_fourcc(*'mp4v'), FRAMES_PER_SECOND, size)
 
     for i in range(len(img_array)):
         out.write(img_array[i])
