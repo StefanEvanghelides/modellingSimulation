@@ -8,14 +8,17 @@
 
 #include <cmath>
 
-// Newton's Gravity Constant and simulation acceleration
+// Newton's Gravity Constant
 const double G = 6.6743 * pow(10, -11);
-constexpr double SIM_ACC = 100000000;
+
+// Initial simulation acceleration
+// NOTE: This can be changed at the runtime, depending on the number of stars
+inline double SIM_ACC = 100000000;
 
 // Minimum and maximum allowed mass for the stars.
 // The values are in Solar Mass.
-constexpr double MASS_MIN = 1.5 * SIM_ACC;
-constexpr double MASS_MAX = 10 * SIM_ACC;
+constexpr double MASS_MIN = 1.5;
+constexpr double MASS_MAX = 10;
 
 // Assume that the universe is a cube of coordinates
 // (0,0,0) and (UNI_MAX, UNI_MAX, UNI_MAX).
@@ -33,11 +36,11 @@ constexpr double THETA = 0.5;
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
 
-// Declare the debug mode, it is false by default
-inline bool DEBUG_MODE = false;
+// Declare the debug mode, it is 0 by default
+inline size_t DEBUG_MODE = 0;
 
 // Set minimum allowed distance between the stars
 // This should be dependent on the size of the universe
-constexpr double STARS_MIN_DIST = UNI_MAX / 10000000;
+inline constexpr double STARS_MIN_DIST = UNI_MAX / 100;
 
 #endif // _CONSTANTS_H

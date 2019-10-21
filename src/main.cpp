@@ -21,7 +21,14 @@ int main(int argc, char** argv)
     // User input - number of iterations
     if (argc > 3) iterations = atoi(argv[3]);
     // User input - DEBUG_MODE
-    if (argc > 4 && strncmp(argv[4], "-d", 2)==0) DEBUG_MODE = true;
+    if (argc > 4 && strncmp(argv[4], "-d", 2) == 0)
+    {
+        DEBUG_MODE = 1;
+        if (strncmp(argv[4], "-d2", 3) == 0) DEBUG_MODE = 2;
+    }
+
+    // Increase simulation acceleration for low number of stars
+    SIM_ACC = pow(10,13) * SIM_ACC / (nrStars1*nrStars2);
 
     //
     // --------------------------------------------------------
@@ -30,7 +37,7 @@ int main(int argc, char** argv)
     Galaxy galaxy2 {galaxyCenter2, nrStars2};
 
     // Show galaxies for debbuging purposes
-    if (DEBUG_MODE)
+    if (DEBUG_MODE == 2)
     {
         galaxy1.showGalaxy();
         galaxy2.showGalaxy();

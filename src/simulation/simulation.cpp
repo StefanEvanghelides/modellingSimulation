@@ -51,6 +51,12 @@ void Simulation::run()
         {
             std::cout << std::endl << " ----- Iteration " << iter << " ----- " << std::endl;
         }
+        if (stars.size() < 2)
+        {
+            std::cout << "There are less than 2 stars in the Universe!" << std::endl
+                      << "Simulation stopped!" << std::endl;
+            break;
+        }
         update(iter);
     }
     auto endTime = Clock::now();
@@ -68,7 +74,9 @@ void Simulation::update(size_t iteration)
 
     // Generate the octree.
     Octree tree = generateOctree();
-    //tree.showTree();
+
+    // Show each tree only in second debug mode
+//    if (DEBUG_MODE == 2) tree.showTree();
 
     // Calculate forces and update stars.
     updateStars(tree);
@@ -91,10 +99,10 @@ void Simulation::updateStars(Octree& tree)
 {
     removeOutOfBounds();
 
-    size_t nStars = stars.size();
+    const size_t nrStars = stars.size();
 
     #pragma omp parallel for
-    for (size_t i = 0; i < nStars; ++i)
+    for (size_t i = 0; i < nrStars; ++i)
     {
         Coordinate force = tree.calculateForce(stars[i]);
         stars[i].setDir(stars[i].getDir() + force);
@@ -113,7 +121,8 @@ void Simulation::removeOutOfBounds()
         }
     ), stars.end());
     if (DEBUG_MODE && nStars != stars.size())
-        std::cout << nStars - stars.size() << " stars went out of bounds.\n";
+        std::cout << nStars - stars.size() << " stars went out of bounds.\n"
+                  << "Remaining: " << stars.size() << std::endl;
 }
 
 // Writes the iteration status to the file in "data" folder.

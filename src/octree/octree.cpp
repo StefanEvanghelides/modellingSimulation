@@ -6,7 +6,7 @@ Octree::Octree(const Coordinate &farBottomLeft, const Coordinate &nearTopRight)
     nearTopRight {nearTopRight},
     center {middleCoord(farBottomLeft, nearTopRight)},
     centerOfMass {center},
-    totalMass {0.0f}
+    totalMass {0.0}
 {}
 
 void Octree::insert(const Star &star)
@@ -50,21 +50,19 @@ Coordinate gravitationalForce(const Star& s1, const Star& s2)
     double m2 = s2.getMass();
 
     Coordinate dc;
-    if (distance(c1, c2) < STARS_MIN_DIST)
+    double dist = distance(c1, c2);
+    if (dist < STARS_MIN_DIST)
     {
-        dc = {STARS_MIN_DIST};
+        dc = 1;
+        dist = STARS_MIN_DIST;
     }
     else
     {
-        dc = {c2 - c1};
+        dc = c2 - c1;
     }
 
-    double force = G * m1 * m2 / pow(distance(c1, c2), 3);
-    double forceX = force * (c1.x - c2.x);
-    double forceY = force * (c1.y - c2.y);
-    double forceZ = force * (c1.z - c2.z);
-
-    Coordinate forces {forceX, forceY, forceZ};
+    double force = G * m1 * m2 * SIM_ACC / pow(dist, 3);
+    Coordinate forces = {dc * force};
 
     return forces;
 }
@@ -77,21 +75,19 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
     double m2 = node.getTotalMass();
 
     Coordinate dc;
-    if (distance(c1, c2) < STARS_MIN_DIST)
+    double dist = distance(c1, c2);
+    if (dist < STARS_MIN_DIST)
     {
-        dc = {STARS_MIN_DIST};
+        dc = 1;
+        dist = STARS_MIN_DIST;
     }
     else
     {
-        dc = {c2 - c1};
+        dc = c2 - c1;
     }
 
-    double force = G * m1 * m2 / pow(distance(c1, c2), 3);
-    double forceX = force * (c1.x - c2.x);
-    double forceY = force * (c1.y - c2.y);
-    double forceZ = force * (c1.z - c2.z);
-
-    Coordinate forces {forceX, forceY, forceZ};
+    double force = G * m1 * m2 * SIM_ACC / pow(dist, 3);
+    Coordinate forces {dc * force};
 
     return forces;
 }
@@ -108,7 +104,6 @@ Coordinate Octree::calculateForce(const Star& star)
 
     double s = nearTopRight.x - farBottomLeft.x;
     double d = distance(star.getCoord(), centerOfMass);
-    if (d < STARS_MIN_DIST) d = STARS_MIN_DIST;
 
     if (s / d < THETA) // Far enough away to consider node a star
         return gravitationalForce(star, *this);

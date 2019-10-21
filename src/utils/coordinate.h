@@ -31,7 +31,7 @@ typedef struct Coordinate
         return Coordinate { x - other.x, y - other.y, z - other.z };
     }
 
-    Coordinate operator*(const size_t &multiplier) const
+    Coordinate operator*(const double multiplier) const
     {
         return Coordinate { x * multiplier, y * multiplier, z * multiplier };
     }
