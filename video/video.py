@@ -11,28 +11,30 @@ imagesPath = os.path.abspath(imagesDirectory)
 videoDirectory = "video_result"
 videoPath = os.path.abspath(videoDirectory)
 
-FRAMES_PER_SECOND = 12
+FRAMES_PER_SECOND = 20
 
 def create_video():
-    img_array = []
-
     files = glob.glob(imagesPath + "/*.png")
     files = sorted(files)
 
     print("Reading files from: " + str(imagesPath))
     tstart = time.time()
 
-    for file in files:
-        img = cv2.imread(file)
-        height, width, layers = img.shape
-        size = (width,height)
-        img_array.append(img)
+    # Retrieve the sizes of an image.
+    # It is assumed that all images have the same sizes.
+    file_0 = cv2.imread(files[0])
+    height, width, layers = file_0.shape
+    size = (width,height)
 
+    # Create the video
     videoFilePath = os.path.join(videoPath, "video.mp4")
     out = cv2.VideoWriter(videoFilePath, cv2.VideoWriter_fourcc(*'mp4v'), FRAMES_PER_SECOND, size)
 
-    for i in range(len(img_array)):
-        out.write(img_array[i])
+    for file in files:
+        img = cv2.imread(file)
+        out.write(img)
+    
+    # Release the video
     out.release()
 
     elapsed_time = time.time() - tstart
