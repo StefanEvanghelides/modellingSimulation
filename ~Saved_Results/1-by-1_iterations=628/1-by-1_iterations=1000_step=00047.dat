@@ -1,0 +1,11 @@
+# This file was created for the Modelling and Simulation course, RUG (September-November 2019).
+#
+# Project: Simulate colliding galaxies, using Barnes-Hut algorithm.
+#
+# Students:
+#     Stefan Evanghelides (s2895323)
+#     Hidde Folkertsma (s2759799)
+#
+#     X         Y         Z         DX        DY        DZ
+214489.242;441709.414;441709.926;100.6518;-0.4054;-0.3945;
+843604.415;439194.437;439194.166;-100.6519;0.3984;0.3927;
