@@ -49,16 +49,13 @@ Coordinate gravitationalForce(const Star& s1, const Star& s2)
     double m1 = s1.getMass();
     double m2 = s2.getMass();
 
-    Coordinate dc;
+    Coordinate dc = c2 - c1;
     double dist = distance(c1, c2);
     if (dist < STARS_MIN_DIST)
-    {
-        dc = 1;
+    {   
+        dc = {copysign(1.0, dc.x), copysign(1.0, dc.y), copysign(1.0, dc.z)};
+//        dc = 1;
         dist = STARS_MIN_DIST;
-    }
-    else
-    {
-        dc = c2 - c1;
     }
 
     double force = G * m1 * m2 * SIM_ACC / pow(dist, 3);
@@ -74,16 +71,13 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
     double m1 = s1.getMass();
     double m2 = node.getTotalMass();
 
-    Coordinate dc;
+    Coordinate dc = c2 - c1;
     double dist = distance(c1, c2);
     if (dist < STARS_MIN_DIST)
-    {
-        dc = 1;
+    {   
+        dc = {copysign(1.0, dc.x), copysign(1.0, dc.y), copysign(1.0, dc.z)};
+//        dc = 1;
         dist = STARS_MIN_DIST;
-    }
-    else
-    {
-        dc = c2 - c1;
     }
 
     double force = G * m1 * m2 * SIM_ACC / pow(dist, 3);

@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     }
 
     // Increase simulation acceleration for low number of stars
-    SIM_ACC = pow(10,13) * SIM_ACC / (nrStars1*nrStars2);
+    SIM_ACC = pow(10,13) * SIM_ACC / (nrStars1 + nrStars2);
 
     //
     // --------------------------------------------------------
