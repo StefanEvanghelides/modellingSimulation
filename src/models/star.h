@@ -10,8 +10,8 @@ class Star
 {
 public:
     Star() = delete;
-    Star(double mass, const Coordinate& coord, const Coordinate& dir)
-        : id{++count}, mass{mass}, coord{coord}, dir{dir} {};
+    Star(const size_t galaxyClass, const double mass, const Coordinate& coord, const Coordinate& dir)
+        : id{++count}, galaxyClass{galaxyClass}, mass{mass}, coord{coord}, dir{dir} {};
     ~Star() = default;
 
     bool operator==(const Star& other) {return id == other.id;}
@@ -30,6 +30,7 @@ public:
 
 private:
     size_t id;
+    size_t galaxyClass;
     double mass;
     Coordinate coord;
     Coordinate dir; // Same Coordinate structure can used for direction too

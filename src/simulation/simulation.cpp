@@ -64,6 +64,7 @@ void Simulation::run()
     std::cout << "Total time: "
               << std::chrono::duration_cast<std::chrono::seconds>(duration).count()
               << " seconds!" << std::endl;
+    std::cout << "Number of stars left: " << stars.size() << std::endl;;
 }
 
 void Simulation::update(size_t iteration)
@@ -183,7 +184,7 @@ void Simulation::writeToFile(const std::string& fileName)
              << "#     Stefan Evanghelides (s2895323)" << std::endl
              << "#     Hidde Folkertsma (s2759799)" << std::endl
              << "#" << std::endl
-             << "#     X         Y         Z         DX        DY        DZ" << std::endl;
+             << "# Galaxy  X          Y          Z          DX      DY      DZ" << std::endl;
 
         // Write the stars
         for (const Star& star : stars)

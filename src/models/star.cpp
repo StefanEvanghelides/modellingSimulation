@@ -5,7 +5,8 @@
 const std::string Star::exportString() const
 {
     std::stringstream ss;
-    ss  << std::fixed << std::setprecision(3) << coord.x << ';'
+    ss  << "    " << galaxyClass << " ;"
+        << std::fixed << std::setprecision(3) << coord.x << ';'
         << std::fixed << std::setprecision(3) << coord.y << ';'
         << std::fixed << std::setprecision(3) << coord.z << ';'
         << std::fixed << std::setprecision(4) << dir.x << ';'
@@ -19,6 +20,7 @@ const std::string Star::exportString() const
 void Star::showStar() const
 {
     std::cout << "Star: " << id;
+    std::cout << "; Galaxy class: " << galaxyClass;
     std::cout << "; Coordinate: ";
     coord.showCoordinate();
     std::cout << "; Direction: ";

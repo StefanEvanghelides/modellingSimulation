@@ -4,6 +4,7 @@
 #include "star.h"
 #include <vector>
 
+
 class Galaxy
 {
 public:
@@ -20,12 +21,13 @@ public:
     void showGalaxy() const;
 
 private:
+    size_t id;
     std::vector<Star> stars;
     Coordinate galaxyCenter;
 };
 
 // Forward declarations
-const Star initializeStar(const Coordinate& galaxyCenter);
+const Star initializeStar(const size_t galaxyClass, const Coordinate& galaxyCenter);
 double doubleRand();
 
 
