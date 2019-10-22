@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:59:00
+#SBATCH --time=23:59:00
 #SBATCH --cpus-per-task=24
 #SBATCH --mem=96000
 #SBATCH --job-name=galaxy
@@ -7,4 +7,4 @@
 #SBATCH --mail-user=s.evanghelides@student.rug.nl
 #SBATCH --output=job-%j.log
 
-srun ./run 100000 100000 100
+srun ./run 1000000 1000000 1000
