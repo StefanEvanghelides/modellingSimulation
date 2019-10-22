@@ -13,10 +13,7 @@ videoPath = os.path.abspath(videoDirectory)
 
 FRAMES_PER_SECOND = 20
 
-def create_video():
-    files = glob.glob(imagesPath + "/*.png")
-    files = sorted(files)
-
+def create_video(files):
     print("Reading files from: " + str(imagesPath))
     tstart = time.time()
 
@@ -49,7 +46,15 @@ if __name__ == '__main__':
         os.makedirs(videoPath)
 
     if os.path.exists(imagesPath):
-        create_video() # This uses the global imagesPath
+        files = glob.glob(imagesPath + "/*.png")
+        files = sorted(files)
+
+        if len(files) > 0:
+            create_video(files) # This uses the global imagesPath
+        else:
+            print("\n      Images directory is empty! Cannot create video!")
+            print("HINT: Plot the stars again after (re)running the program!")
+
     else:
         print("\n      Images directory does not exists! Cannot create video!")
         print("HINT: Images directory is generated automatically after running the plotting script!\n")
