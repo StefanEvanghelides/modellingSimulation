@@ -162,6 +162,7 @@ const std::string Simulation::getFileName(size_t iteration)
     std::stringstream ss;
     ss  << nrStars1 << "-by-" << nrStars2
         << "_iterations=" << this->iterations
+        << "_theta=" << THETA
         << "_step=" << padding << iteration
         << ".dat"; // extension
 
