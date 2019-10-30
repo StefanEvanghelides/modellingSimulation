@@ -13,22 +13,24 @@ int main(int argc, char** argv)
     // Default user input
     size_t nrStars1 = 1000;
     size_t nrStars2 = 1000;
-    size_t iterations = 1000;
+    size_t iterations = 500;
 
     // User input - number of stars
     if (argc > 1) nrStars1 = atoi(argv[1]);
     if (argc > 2) nrStars2 = atoi(argv[2]);
     // User input - number of iterations
     if (argc > 3) iterations = atoi(argv[3]);
+    // User input - theta
+    if (argc > 4) THETA = atof(argv[4]);
     // User input - DEBUG_MODE
-    if (argc > 4 && strncmp(argv[4], "-d", 2) == 0)
+    if (argc > 5 && strncmp(argv[5], "-d", 2) == 0)
     {
         DEBUG_MODE = 1;
-        if (strncmp(argv[4], "-d2", 3) == 0) DEBUG_MODE = 2;
+        if (strncmp(argv[5], "-d2", 3) == 0) DEBUG_MODE = 2;
     }
 
     // Increase simulation acceleration for low number of stars
-    SIM_ACC = pow(10,13) * SIM_ACC / (nrStars1 + nrStars2);
+    SIM_ACC = SIM_ACC / (nrStars1 + nrStars2);
 
     //
     // --------------------------------------------------------

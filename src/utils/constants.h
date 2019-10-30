@@ -13,7 +13,7 @@ const double G = 6.6743 * pow(10, -11);
 
 // Initial simulation acceleration
 // NOTE: This can be changed at the runtime, depending on the number of stars
-inline double SIM_ACC = 100000000;
+inline double SIM_ACC = pow(10,21);
 
 // Minimum and maximum allowed mass for the stars.
 // The values are in Solar Mass.
@@ -31,7 +31,7 @@ constexpr double DIR_MIN = -0.01;
 constexpr double DIR_MIN_DEV = 0.02;
 
 // Theta
-constexpr double THETA = 0.5;
+inline double THETA = 0.5;
 
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
