@@ -62,7 +62,7 @@ void Simulation::run()
     auto endTime = Clock::now();
     std::chrono::duration<double> duration = endTime - startTime;
     std::cout << "Total time: "
-              << std::chrono::duration_cast<std::chrono::seconds>(duration).count()
+              << duration.count()
               << " seconds!" << std::endl;
     std::cout << "Number of stars left: " << stars.size() << std::endl;;
 }
