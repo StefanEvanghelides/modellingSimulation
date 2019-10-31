@@ -21,7 +21,7 @@ resultsPath = os.path.abspath(resultsDirectory)
 UNI_MAX = 1000000
 
 # Color set for the galaxy classes
-DEFAULT_COLORS = ['white', 'lime', 'yellow', 'pink', 'blue', 'red']
+DEFAULT_COLORS = ['white', 'lime', 'yellow', 'pink', 'cyan', 'orange', 'blue' ,'red']
 
 # Define the marker size
 DEFAULT_MARKER_SIZE = 3
