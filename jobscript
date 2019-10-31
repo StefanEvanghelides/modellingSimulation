@@ -1,10 +1,56 @@
 #!/bin/bash
-#SBATCH --time=00:09:00
+#SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=96000
+#SBATCH --mem=16000
 #SBATCH --job-name=nbodysim
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=h.folkertsma.1@student.rug.nl
 #SBATCH --output=job-%j.log
 
-srun ./run 100000 100000 100
+# Theta = 0.0
+srun ./run 500 500 100 0.0
+srun ./run 1000 1000 100 0.0
+srun ./run 1500 1500 100 0.0
+srun ./run 2000	2000 100 0.0
+srun ./run 2500 2500 100 0.0
+srun ./run 3000 3000 100 0.0
+srun ./run 3500 3500 100 0.0
+srun ./run 4000 4000 100 0.0
+srun ./run 4500 4500 100 0.0
+srun ./run 5000 5000 100 0.0
+
+# Theta = 0.5
+srun ./run 500 500 100 0.5
+srun ./run 1000 1000 100 0.5
+srun ./run 1500 1500 100 0.5
+srun ./run 2000	2000 100 0.5
+srun ./run 2500 2500 100 0.5
+srun ./run 3000 3000 100 0.5
+srun ./run 3500 3500 100 0.5
+srun ./run 4000 4000 100 0.5
+srun ./run 4500 4500 100 0.5
+srun ./run 5000 5000 100 0.5
+
+# Theta = 1.0
+srun ./run 500 500 100 1.0
+srun ./run 1000 1000 100 1.0
+srun ./run 1500 1500 100 1.0
+srun ./run 2000	2000 100 1.0
+srun ./run 2500 2500 100 1.0
+srun ./run 3000 3000 100 1.0
+srun ./run 3500 3500 100 1.0
+srun ./run 4000 4000 100 1.0
+srun ./run 4500 4500 100 1.0
+srun ./run 5000 5000 100 1.0
+
+# Theta = 1.5
+srun ./run 500 500 100 1.5
+srun ./run 1000 1000 100 1.5
+srun ./run 1500 1500 100 1.5
+srun ./run 2000	2000 100 1.5
+srun ./run 2500 2500 100 1.5
+srun ./run 3000 3000 100 1.5
+srun ./run 3500 3500 100 1.5
+srun ./run 4000 4000 100 1.5
+srun ./run 4500 4500 100 1.5
+srun ./run 5000 5000 100 1.5
