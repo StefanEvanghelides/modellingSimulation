@@ -1,0 +1,120 @@
+diff --git a/src/main.cpp b/src/main.cpp
+index e2dbada..e6903d2 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -7,26 +7,32 @@
+ int main(int argc, char** argv)
+ {
+     // Default galaxy centers
+-    const Coordinate galaxyCenter1 {0.2 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
+-    const Coordinate galaxyCenter2 {0.8 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
++    const Coordinate galaxyCenter1 {0.2 * UNI_MAX, 0.2 * UNI_MAX, UNI_MAX/2};
++    const Coordinate galaxyCenter2 {0.2 * UNI_MAX, 0.8 * UNI_MAX, UNI_MAX/2};
++    const Coordinate galaxyCenter3 {0.8 * UNI_MAX, 0.2 * UNI_MAX, UNI_MAX/2};
++    const Coordinate galaxyCenter4 {0.8 * UNI_MAX, 0.8 * UNI_MAX, UNI_MAX/2};
+ 
+     // Default user input
+     size_t nrStars1 = 1000;
+     size_t nrStars2 = 1000;
++    size_t nrStars3 = 1000;
++    size_t nrStars4 = 1000;
+     size_t iterations = 500;
+ 
+     // User input - number of stars
+     if (argc > 1) nrStars1 = atoi(argv[1]);
+     if (argc > 2) nrStars2 = atoi(argv[2]);
++    if (argc > 3) nrStars3 = atoi(argv[3]);
++    if (argc > 4) nrStars4 = atoi(argv[4]);
+     // User input - number of iterations
+-    if (argc > 3) iterations = atoi(argv[3]);
++    if (argc > 5) iterations = atoi(argv[5]);
+     // User input - theta
+-    if (argc > 4) THETA = atof(argv[4]);
++    if (argc > 6) THETA = atof(argv[6]);
+     // User input - DEBUG_MODE
+-    if (argc > 5 && strncmp(argv[5], "-d", 2) == 0)
++    if (argc > 7 && strncmp(argv[7], "-d", 2) == 0)
+     {
+         DEBUG_MODE = 1;
+-        if (strncmp(argv[5], "-d2", 3) == 0) DEBUG_MODE = 2;
++        if (strncmp(argv[7], "-d2", 3) == 0) DEBUG_MODE = 2;
+     }
+ 
+     // Increase simulation acceleration for low number of stars
+@@ -37,25 +43,33 @@ int main(int argc, char** argv)
+     // Generate the galaxies
+     Galaxy galaxy1 {galaxyCenter1, nrStars1};
+     Galaxy galaxy2 {galaxyCenter2, nrStars2};
++    Galaxy galaxy3 {galaxyCenter3, nrStars3};
++    Galaxy galaxy4 {galaxyCenter4, nrStars4};
+ 
+     // Show galaxies for debbuging purposes
+     if (DEBUG_MODE == 2)
+     {
+         galaxy1.showGalaxy();
+         galaxy2.showGalaxy();
++        galaxy3.showGalaxy();
++        galaxy4.showGalaxy();
+     }
+ 
+     // Show initial data of stars
+     std::cout << "Galaxy 1 has " << nrStars1 << " stars." << std::endl;
+     std::cout << "Galaxy 2 has " << nrStars2 << " stars." << std::endl;
++    std::cout << "Galaxy 3 has " << nrStars3 << " stars." << std::endl;
++    std::cout << "Galaxy 4 has " << nrStars4 << " stars." << std::endl;
+     double totalMass = 0.0f;
+     for (const Star& star : galaxy1.getStars()) totalMass += star.getMass();
+     for (const Star& star : galaxy2.getStars()) totalMass += star.getMass();
++    for (const Star& star : galaxy3.getStars()) totalMass += star.getMass();
++    for (const Star& star : galaxy4.getStars()) totalMass += star.getMass();
+     std::cout << "Total Mass: " << totalMass << std::endl;
+     std::cout << "The simulation runs " << iterations << " iterations." << std::endl;
+     if (DEBUG_MODE) std::cout << "DEBUG MODE ACTIVE!" << std::endl;
+ 
+     // Run the simulation
+-    Simulation simulation(galaxy1, galaxy2, iterations);
++    Simulation simulation(galaxy1, galaxy2, galaxy3, galaxy4, iterations);
+     simulation.run();
+ }
+\ No newline at end of file
+diff --git a/src/simulation/simulation.cpp b/src/simulation/simulation.cpp
+index 5f990c7..5ccc54d 100644
+--- a/src/simulation/simulation.cpp
++++ b/src/simulation/simulation.cpp
+@@ -14,8 +14,12 @@ void Simulation::run()
+     // Combine stars from galaxies
+     std::vector<Star> stars1 = galaxy1.getStars();
+     std::vector<Star> stars2 = galaxy2.getStars();
++    std::vector<Star> stars3 = galaxy3.getStars();
++    std::vector<Star> stars4 = galaxy4.getStars();
+     copy (stars1.begin(), stars1.end(), back_inserter(this->stars));
+     copy (stars2.begin(), stars2.end(), back_inserter(this->stars));
++    copy (stars3.begin(), stars3.end(), back_inserter(this->stars));
++    copy (stars4.begin(), stars4.end(), back_inserter(this->stars));
+ 
+     // Ensure that the "data" folder exists
+     std::ofstream dataDirectory;
+diff --git a/src/simulation/simulation.h b/src/simulation/simulation.h
+index 08a8cfe..55205d1 100644
+--- a/src/simulation/simulation.h
++++ b/src/simulation/simulation.h
+@@ -9,8 +9,8 @@ class Simulation
+ {
+ public:
+     Simulation() = delete;
+-    Simulation(Galaxy galaxy1, Galaxy galaxy2, const size_t iterations)
+-        : galaxy1{galaxy1}, galaxy2{galaxy2}, iterations{iterations} {}
++    Simulation(Galaxy galaxy1, Galaxy galaxy2, Galaxy galaxy3, Galaxy galaxy4, const size_t iterations)
++        : galaxy1{galaxy1}, galaxy2{galaxy2}, galaxy3{galaxy3}, galaxy4{galaxy4}, iterations{iterations} {}
+     ~Simulation() = default;
+ 
+     void run();
+@@ -27,6 +27,8 @@ private: // Private functions
+ private: // Private members
+     Galaxy galaxy1;
+     Galaxy galaxy2;
++    Galaxy galaxy3;
++    Galaxy galaxy4;
+     std::vector<Star> stars;
+     size_t iterations;
+ };
