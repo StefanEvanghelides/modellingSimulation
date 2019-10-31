@@ -8,6 +8,7 @@
 #SBATCH --output=job-%j.log
 
 # Theta = 0.0
+echo "------- THETA 0.0 --------"
 srun ./run 500 500 100 0.0
 srun ./run 1000 1000 100 0.0
 srun ./run 1500 1500 100 0.0
@@ -20,6 +21,7 @@ srun ./run 4500 4500 100 0.0
 srun ./run 5000 5000 100 0.0
 
 # Theta = 0.5
+echo "------- THETA 0.5 --------"
 srun ./run 500 500 100 0.5
 srun ./run 1000 1000 100 0.5
 srun ./run 1500 1500 100 0.5
@@ -32,6 +34,7 @@ srun ./run 4500 4500 100 0.5
 srun ./run 5000 5000 100 0.5
 
 # Theta = 1.0
+echo "------- THETA 1.0 --------"
 srun ./run 500 500 100 1.0
 srun ./run 1000 1000 100 1.0
 srun ./run 1500 1500 100 1.0
@@ -44,6 +47,7 @@ srun ./run 4500 4500 100 1.0
 srun ./run 5000 5000 100 1.0
 
 # Theta = 1.5
+echo "------- THETA 1.5 --------"
 srun ./run 500 500 100 1.5
 srun ./run 1000 1000 100 1.5
 srun ./run 1500 1500 100 1.5
