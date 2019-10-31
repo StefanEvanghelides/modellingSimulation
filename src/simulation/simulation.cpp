@@ -9,6 +9,38 @@
 
 typedef std::chrono::high_resolution_clock Clock;
 
+void Simulation::createOutputDir()
+{
+    std::stringstream ss;
+    ss  << DATA_DIRECTORY << '/'
+        << galaxy1.getNrStars() << "-by-" << galaxy2.getNrStars()
+        << "_iterations=" << this->iterations
+        << "_theta=" << THETA;
+
+    std::string path = ss.str();
+
+    if (!directoryExists(path.c_str()))
+    {
+        std::cout << "Directory doesn't exist! Attempting to create it..." << std::endl;
+        #ifdef _WIN32
+            int errorDirCreated = mkdir(path.c_str());
+        #else
+            int errorDirCreated = mkdir(path.c_str(), 0777);
+        #endif
+        if (errorDirCreated)
+        {
+            std::cout << "Directory could not be created!" << std::endl;
+            exit(0);
+        }
+        else
+        {
+            std::cout << "Directory created successful!" << std::endl;
+        }
+    }
+
+    outputDir = path;
+}
+
 void Simulation::run()
 {
     // Combine stars from galaxies
@@ -18,7 +50,6 @@ void Simulation::run()
     copy (stars2.begin(), stars2.end(), back_inserter(this->stars));
 
     // Ensure that the "data" folder exists
-    std::ofstream dataDirectory;
     if (!directoryExists(DATA_DIRECTORY))
     {
         std::cout << "Directory doesn't exist! Attempting to create it..." << std::endl;
@@ -41,6 +72,8 @@ void Simulation::run()
     {
         std::cout << "Directory already exists! Nothing needs to be done" << std::endl;
     }
+
+    createOutputDir();
 
     // Run the simulation.
     // Also start a timer
@@ -171,7 +204,7 @@ const std::string Simulation::getFileName(size_t iteration)
 
 void Simulation::writeToFile(const std::string& fileName)
 {
-    std::string path = std::string(DATA_DIRECTORY) + "/" + fileName;
+    std::string path = std::string(outputDir) + "/" + fileName;
     std::ofstream file {path};
     if (file.is_open())
     {

@@ -23,12 +23,14 @@ private: // Private functions
     const std::string getFileName(size_t iteration);
     void writeToFile(const std::string& fileName);
     void removeOutOfBounds();
+    void createOutputDir();
 
 private: // Private members
     Galaxy galaxy1;
     Galaxy galaxy2;
     std::vector<Star> stars;
     size_t iterations;
+    std::string outputDir;
 };
 
 // Forward declarations
