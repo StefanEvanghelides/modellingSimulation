@@ -6,6 +6,9 @@ __pycache__/
 # Colliding Galaxies extra ignore list
 TMP/
 
+# Pipfiles
+**/Pipfile*
+
 # C/C++ stuff
 *.so
 **/RUN*
