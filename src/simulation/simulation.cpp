@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <algorithm>
 #include <chrono>
+#include <matplot/matplot.h>
 
 typedef std::chrono::high_resolution_clock Clock;
 
@@ -106,6 +107,9 @@ void Simulation::update(size_t iteration)
     // The export is executed first in order to show the initial state of the galaxies.
     exportIteration(iteration);
 
+    // Plot the current state of the stars in a file
+    plotIteration(iteration);
+
     // Generate the octree.
     Octree tree = generateOctree();
 
@@ -164,13 +168,57 @@ void Simulation::removeOutOfBounds()
 void Simulation::exportIteration(size_t iteration)
 {
     // Generate the name of the file
-    const std::string& fileName = getFileName(iteration);
+    const std::string& fileName = getFileName(iteration, ".dat");
 
     // Export to file
     writeToFile(fileName);
 }
 
-const std::string Simulation::getFileName(size_t iteration)
+void Simulation::plotIteration(size_t iteration)
+{
+    using namespace matplot;
+
+    std::vector<double> x, y, z;
+    std::vector<double> x2, y2, z2;
+    for (const Star& star : stars)
+    {
+        Coordinate c = star.getCoord();
+        if (star.getGalaxyClass() == 1)
+        {
+            x.emplace_back(c.x);
+            y.emplace_back(c.y);
+            z.emplace_back(c.z);
+        }
+        else
+        {
+            x2.emplace_back(c.x);
+            y2.emplace_back(c.y);
+            z2.emplace_back(c.z);
+        }
+        // https://github.com/alandefreitas/matplotplusplus/issues/63
+        // uncomment the following line when the colorbar bug is fixed:
+        // colors.emplace_back(star.getGalaxyClass());
+    }
+
+    std::vector<double> sizes(x.size(), 1);
+
+    auto f = figure(true); // don't open a window
+    hold(on);
+    scatter3(x, y, z, sizes); // plot twice to avoid colorbar bug:
+    scatter3(x2, y2, z2, sizes);
+    hold(off);
+    auto ax1 = gca();
+    ax1->visible(false);
+    colormap(palette::paired());
+
+    xlim({-100, 1.1 * UNI_MAX});
+    ylim({-100, 1.1 * UNI_MAX});
+    zlim({-100, 1.1 * UNI_MAX});
+
+    f->save(RESULTS_DIRECTORY + "/" + getFileName(iteration, ".png"));
+}
+
+const std::string Simulation::getFileName(size_t iteration, const std::string& extension)
 {
     const size_t nrStars1 = galaxy1.getNrStars();
     const size_t nrStars2 = galaxy2.getNrStars();
@@ -197,7 +245,7 @@ const std::string Simulation::getFileName(size_t iteration)
         << "_iterations=" << this->iterations
         << "_theta=" << THETA
         << "_step=" << padding << iteration
-        << ".dat"; // extension
+        << extension; // extension
 
     return ss.str();
 }

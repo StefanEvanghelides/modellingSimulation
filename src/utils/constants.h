@@ -7,6 +7,7 @@
  */
 
 #include <cmath>
+#include <string>
 
 // Newton's Gravity Constant
 const double G = 6.6743 * pow(10, -11);
@@ -35,6 +36,7 @@ inline double THETA = 0.5;
 
 // Directory names
 inline const char* DATA_DIRECTORY = "./data";
+inline const std::string RESULTS_DIRECTORY = "./plotting_result";
 
 // Declare the debug mode, it is 0 by default
 inline size_t DEBUG_MODE = 0;

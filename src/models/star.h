@@ -17,6 +17,7 @@ public:
     bool operator==(const Star& other) {return id == other.id;}
 
     size_t getId() const {return id;}
+    size_t getGalaxyClass() const {return galaxyClass;}
     double getMass() const {return mass;}
     Coordinate getCoord() const {return coord;}
     Coordinate getDir() const {return dir;}

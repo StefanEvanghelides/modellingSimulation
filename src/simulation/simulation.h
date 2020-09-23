@@ -20,7 +20,8 @@ private: // Private functions
     Octree generateOctree();
     void updateStars(Octree& tree);
     void exportIteration(size_t iteration);
-    const std::string getFileName(size_t iteration);
+    void plotIteration(size_t iteration);
+    const std::string getFileName(size_t iteration, const std::string& extension);
     void writeToFile(const std::string& fileName);
     void removeOutOfBounds();
     void createOutputDir();
