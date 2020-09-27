@@ -12,12 +12,3 @@ services:
 volumes:
   modsim-data:
     external: true
-    
-    
-#volumes:
-#  web_app:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: ${WEB_APP_PATH}
-#      o: bind

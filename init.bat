@@ -5,8 +5,5 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxili
 
 set dir=src
 
-docker volume create --driver local \
-    --opt type=none \
-    --opt device=$PWD/data \
-    --opt o=bind \
-    modsim-data
+:: Create the volumes
+call .\utils\volumes\create-volumes.bat
