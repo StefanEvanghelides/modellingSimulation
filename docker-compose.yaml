@@ -7,4 +7,5 @@ services:
     image: modsim
     command: "tail -f /dev/null"
     volumes:
-      - './data:/app/data'`
+      - './data:/app/data'
+      - './plotting_result:/app/plotting_result'
