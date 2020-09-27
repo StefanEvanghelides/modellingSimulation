@@ -46,6 +46,6 @@ fi
 # Finally, remove the dummy container.
 # Note: we use "hello world" because it is a very lightweight container.
 docker container create --name dummy -v $volume_name:/root hello-world
-docker cp dummy:/root $path_to_source 
+docker cp dummy:/root/. $path_to_source 
 docker rm dummy
 
