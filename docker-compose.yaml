@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  modsim:
+    build: ./
+    container_name: modsim
+    image: modsim
+    command: bash -c "cd app && ./build/src/run"
+    volumes:
+      - modsim-data:/app/data/
+
+volumes:
+  modsim-data:
+    external: true
+    
+    
+#volumes:
+#  web_app:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      device: ${WEB_APP_PATH}
+#      o: bind

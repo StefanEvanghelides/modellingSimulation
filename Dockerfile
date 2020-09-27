@@ -3,7 +3,7 @@
 FROM debian:bullseye-slim as RUNNING
 
 RUN apt-get update \
-    && apt install -y g++ build-essential cmake
+    && apt install -y g++ build-essential cmake gnuplot
 
 COPY requirements.txt /
 COPY Makefile /app/
@@ -21,7 +21,7 @@ RUN cmake --version
 RUN cd app && mkdir build && cd build && cmake ..
 RUN cd app/build && make
 
-CMD ["./app/build/src/run"]
+CMD [bash -c "cd app && ./build/src/run"]
 
 # Still have to bind a volume to get the data and the plots on the host
 
