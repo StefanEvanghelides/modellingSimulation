@@ -5,10 +5,6 @@ services:
     build: ./
     container_name: modsim
     image: modsim
-    command: bash -c "cd app && ./build/src/run"
+    command: "tail -f /dev/null"
     volumes:
-      - modsim-data:/app/data/
-
-volumes:
-  modsim-data:
-    external: true
+      - './data:/app/data'`
