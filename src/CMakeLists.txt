@@ -20,5 +20,7 @@ add_executable(run main.cpp)
 
 # Link Simulation first, then matplot!
 # otherwise you will get linker errors
+
 target_link_libraries(run LINK_PUBLIC Simulation)
+target_link_libraries(run PRIVATE OpenMP::OpenMP_CXX)
 target_link_libraries(run PUBLIC matplot)
