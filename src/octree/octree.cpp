@@ -6,12 +6,13 @@ Octree::Octree(const Coordinate &farBottomLeft, const Coordinate &nearTopRight)
     nearTopRight {nearTopRight},
     center {middleCoord(farBottomLeft, nearTopRight)},
     centerOfMass {center},
-    totalMass {0.0}
+    totalMass {0.0},
+    isLeaf {true}
 {}
 
 void Octree::insert(const Star &star)
 {
-    if (stars.empty() && isLeaf())
+    if (stars.empty() && isLeaf)
     {
         stars.emplace_back(std::move(star));
         return;
@@ -31,6 +32,7 @@ void Octree::insert(const Star &star)
         (down ? ntr : fbl).y = center.y;
         (far ? ntr : fbl).z = center.z;
         child = std::make_unique<Octree>(fbl, ntr); // create subtree
+        isLeaf = false; // after adding a child, octree is no longer a leaf
         auto toMove = std::move(stars);
         stars.clear();
         for (auto &star : toMove)
@@ -88,7 +90,7 @@ Coordinate gravitationalForce(const Star& s1, const Octree& node)
 
 Coordinate Octree::calculateForce(const Star& star)
 {
-    if (isLeaf())
+    if (isLeaf)
     {
         if (stars.front().getId() == star.getId())
             return Coordinate(); // return 0, star doesn't exert force on itself
@@ -108,14 +110,6 @@ Coordinate Octree::calculateForce(const Star& star)
             force += child->calculateForce(star);
 
     return force;
-}
-
-// check if all children are null
-bool Octree::isLeaf() const
-{
-    for (auto& x : children)
-        if (x) return 0;
-    return 1;
 }
 
 void Octree::updateCenterOfMass(const Star &star)

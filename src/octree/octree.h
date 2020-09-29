@@ -25,7 +25,6 @@ public:
     Coordinate calculateForce(const Star& star);
 
 private:
-    bool isLeaf() const;
     void updateCenterOfMass(const Star &star);
 
 private:
@@ -35,6 +34,7 @@ private:
 
     Coordinate centerOfMass;
     double totalMass;
+    bool isLeaf;
 
     std::unique_ptr<Octree> children[8] = {}; // subtrees
     std::vector<Star> stars = {}; // elements; empty unless we are at a leaf node
