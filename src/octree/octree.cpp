@@ -90,10 +90,9 @@ Coordinate Octree::calculateForce(const Star& star)
 {
     if (isLeaf())
     {
-        Star leafStar = stars.front();
-        if (leafStar.getId() == star.getId())
+        if (stars.front().getId() == star.getId())
             return Coordinate(); // return 0, star doesn't exert force on itself
-        return gravitationalForce(star, leafStar);
+        return gravitationalForce(star, stars.front());
     }
 
     double s = nearTopRight.x - farBottomLeft.x;
