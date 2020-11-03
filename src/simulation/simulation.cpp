@@ -108,7 +108,10 @@ void Simulation::update(size_t iteration)
     exportIteration(iteration);
 
     // Plot the current state of the stars in a file
-    plotIteration(iteration);
+    if (PLOT)
+    {
+        plotIteration(iteration);
+    }
 
     // Generate the octree.
     Octree tree = generateOctree();
@@ -258,7 +261,7 @@ void Simulation::writeToFile(const std::string& fileName)
     {
         // Write file header commentary
         // Note: This file is expected to be run in python, so use python comment syntax
-        file << "# This file was created for the Modelling and Simulation course, RUG (September-November 2019)." << std::endl
+        file << "# This file was created for the Modelling and Simulation course, RUG (September-November 2020)." << std::endl
              << "#" << std::endl
              << "# Project: Simulate colliding galaxies, using Barnes-Hut algorithm." << std::endl
              << "#" << std::endl

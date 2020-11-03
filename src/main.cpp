@@ -1,6 +1,7 @@
 #include "simulation/simulation.h"
 #include "octree/octree.h"
 #include "utils/constants.h"
+#include "utils/argparse.h"
 #include <iostream>
 #include <cstring>
 
@@ -10,24 +11,48 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter1 {0.2 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
     const Coordinate galaxyCenter2 {0.8 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
 
-    // Default user input
-    size_t nrStars1 = 1000;
-    size_t nrStars2 = 1000;
-    size_t iterations = 500;
 
-    // User input - number of stars
-    if (argc > 1) nrStars1 = atoi(argv[1]);
-    if (argc > 2) nrStars2 = atoi(argv[2]);
-    // User input - number of iterations
-    if (argc > 3) iterations = atoi(argv[3]);
-    // User input - theta
-    if (argc > 4) THETA = atof(argv[4]);
-    // User input - DEBUG_MODE
-    if (argc > 5 && strncmp(argv[5], "-d", 2) == 0)
-    {
-        DEBUG_MODE = 1;
-        if (strncmp(argv[5], "-d2", 3) == 0) DEBUG_MODE = 2;
+    argparse::ArgumentParser parser("test");
+    parser.add_argument("-d", "--debug")
+      .help("increase output verbosity")
+      .default_value(0)
+      .implicit_value(1);
+    parser.add_argument("-i", "--iterations")
+      .help("Number of iterations")
+      .default_value(500)
+      .action([](const std::string& value) { return std::stoi(value); });
+    parser.add_argument("-s1", "--stars1")
+      .help("Number of stars in the first galaxy")
+      .default_value(1000)
+      .action([](const std::string& value) { return std::stoi(value); });
+    parser.add_argument("-s2", "--stars2")
+      .help("Number of stars in the second galaxy")
+      .default_value(1000)
+      .action([](const std::string& value) { return std::stoi(value); });
+    parser.add_argument("-t", "--theta")
+      .help("Theta value, based on the Barnes-Hut algorithm")
+      .default_value(0.5)
+      .action([](const std::string& value) { return std::stod(value); });
+    parser.add_argument("-p", "--plot")
+      .help("Automatically plot the stars")
+      .default_value(false)
+      .implicit_value(true);
+
+    try {
+      parser.parse_args(argc, argv);
     }
+    catch (const std::runtime_error& err) {
+      std::cout << err.what() << std::endl;
+      std::cout << parser;
+      exit(0);
+    }
+
+    size_t nrStars1 = parser.get<int>("-s1");
+    size_t nrStars2 = parser.get<int>("-s2");
+    size_t iterations = parser.get<int>("-i");
+    THETA = parser.get<double>("-t");
+    DEBUG_MODE = parser.get<int>("-d");
+    PLOT = parser.get<bool>("-p");
 
     // Increase simulation acceleration for low number of stars
     SIM_ACC = SIM_ACC / (nrStars1 + nrStars2);

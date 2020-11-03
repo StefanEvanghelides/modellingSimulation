@@ -41,8 +41,15 @@ inline const std::string RESULTS_DIRECTORY = "./plotting_result";
 // Declare the debug mode, it is 0 by default
 inline size_t DEBUG_MODE = 0;
 
+// Flag specifying whether to plot the stars during computation.
+inline bool PLOT = false;
+
 // Set minimum allowed distance between the stars
 // This should be dependent on the size of the universe
 inline constexpr double STARS_MIN_DIST = UNI_MAX / 100;
+
+// Initial velocity for the stars of the 2 galaxies
+inline double VELOC1 = 0;
+inline double VELOC2 = 0;
 
 #endif // _CONSTANTS_H
