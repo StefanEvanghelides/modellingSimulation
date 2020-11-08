@@ -23,9 +23,3 @@ RUN cd app/build && make
 
 CMD [bash -c "cd app && ./build/src/run"]
 
-# Still have to bind a volume to get the data and the plots on the host
-
-# RUN cd app
-# RUN pip install -r requirements.txt
-
-# CMD [ "python", "app/plotting/plot.py" ]
