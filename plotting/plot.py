@@ -93,7 +93,7 @@ def plot_stars(galaxyClasses, coordinates, results_directory, filename):
     wframe = None
     if wframe:
         axes.collections.remove(wframe)
-    wframe = axes.scatter(x, y, z, s=markerSize, c=colors)
+    wframe = axes.scatter(x, y, z, s=markerSize, alpha=0.2, c=colors)
 
     saveFigure(fig, results_directory, filename)
 
