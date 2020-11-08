@@ -2,7 +2,7 @@
 This repository contains the project for the Modelling and Simulation course.
 
 ## Topic: Simulating Colliding Galaxies
-How to run:
+It is recommended to use Docker to run this application (see below). How to run manually:
 ```
 mkdir build
 cd build
