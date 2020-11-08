@@ -46,7 +46,8 @@ def saveFigure(fig, results_directory, file):
     resultsFile = os.path.join(results_directory, filename)
 
     # Save the plot
-    fig.savefig(resultsFile + '.png', figsize=(15, 15), dpi=200)
+    fig.savefig(resultsFile + '.png', figsize=(15, 15), dpi=200,
+                bbox_inches = 'tight', pad_inches = 0)
 
 
 # Plots the coordinates of stars for one iteration
