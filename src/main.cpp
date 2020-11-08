@@ -8,11 +8,11 @@
 int main(int argc, char** argv)
 {
     // Default galaxy centers
-    const Coordinate galaxyCenter1 {0.2 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
-    const Coordinate galaxyCenter2 {0.8 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
+    const Coordinate galaxyCenter1 {0.2 * UNI_MAX, 0.75 * UNI_MAX, UNI_MAX/2};
+    const Coordinate galaxyCenter2 {0.8 * UNI_MAX, 0.25 * UNI_MAX, UNI_MAX/2};
 
 
-    argparse::ArgumentParser parser("test");
+    argparse::ArgumentParser parser("run");
     parser.add_argument("-d", "--debug")
       .help("increase output verbosity")
       .default_value(0)
