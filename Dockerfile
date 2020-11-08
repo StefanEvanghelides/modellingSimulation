@@ -5,7 +5,6 @@ FROM debian:bullseye-slim as RUNNING
 RUN apt-get update \
     && apt install -y g++ build-essential cmake gnuplot
 
-COPY requirements.txt /
 COPY Makefile /app/
 COPY CMakeLists.txt /app/
 COPY accuracy/ /app/accuracy/
