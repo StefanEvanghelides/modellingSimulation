@@ -12,7 +12,7 @@ int main(int argc, char** argv)
     const Coordinate galaxyCenter2 {0.8 * UNI_MAX, UNI_MAX/2, UNI_MAX/2};
 
 
-    argparse::ArgumentParser parser("test");
+    argparse::ArgumentParser parser("run");
     parser.add_argument("-d", "--debug")
       .help("increase output verbosity")
       .default_value(0)
@@ -78,7 +78,6 @@ int main(int argc, char** argv)
     for (const Star& star : galaxy2.getStars()) totalMass += star.getMass();
     std::cout << "Total Mass: " << totalMass << std::endl;
     std::cout << "The simulation runs " << iterations << " iterations." << std::endl;
-    std::cout << "Theta: " << THETA << std::endl;
     if (DEBUG_MODE) std::cout << "DEBUG MODE ACTIVE!" << std::endl;
 
     // Run the simulation
