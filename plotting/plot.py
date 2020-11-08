@@ -179,10 +179,7 @@ if __name__ == '__main__':
         if len(files) < 1:
             print("\n      Data directory is empty! Nothing to plot!")
             print("HINT: Run the program again!")
+            sys.exit(0)
 
         plot_data(files, data_directory=data_dir, results_directory=results_directory)
-
-        # Just 1 iteration for now
-        sys.exit(0)
-
 
